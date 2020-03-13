@@ -41,6 +41,7 @@
 #include "CEraser.h"
 #include "CBall.h"
 #include "CBouncingBall.h"
+#include "Lava_Rock_Map.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -74,6 +75,8 @@ namespace game_framework {
 	///////////////////////////////////////////////////////////////////////////////
 	//Practise
 	//////////////////////////////////////////////////////////////////////////////
+	/*
+	
 	class CPractice {
 	public: 
 		CPractice();
@@ -99,6 +102,10 @@ namespace game_framework {
 	};
 
 
+	
+	
+	*/
+	
 
 
 
@@ -144,15 +151,20 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 
+		Lava_Rock_Map lava_rock_map;
+
 		///////////////////////////////////////////////////////
 		//practise
 		///////////////////////////////////////////////////////
+		/*
 		CMovingBitmap practice;
 		CMovingBitmap practice_2;
 		CMovingBitmap borader;
 		int picX, picY;
 		CPractice c_practice;
 		CGameMap gamemap;
+		*/
+		
 
 	};
 

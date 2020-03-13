@@ -34,6 +34,10 @@ IDB_BLUE                BITMAP                  "..\\res\\blue.bmp"
 
 IDB_GREEN               BITMAP                  "..\\res\\green.bmp"
 
+IDB_LAVA_1              BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\lava_1.bmp"
+
+IDB_ROCK                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\rock.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

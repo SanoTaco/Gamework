@@ -196,7 +196,7 @@ CGameStateRun::CGameStateRun(CGame *g)
 	/////////////////////////////////////////////////
 	//practice
 	///////////////////////////////////////////
-	picX = picY = 0;
+	//picX = picY = 0;
 }
 
 CGameStateRun::~CGameStateRun()
@@ -329,11 +329,7 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	//
 
 
-	practice.LoadBitmap(IDB_SMILEFACE);
-	practice_2.LoadBitmap("Bitmaps/Green.bmp");
-	borader.LoadBitmap(IDB_BORADER, RGB(255, 255, 255));
-	c_practice.LoadBitmap();
-	gamemap.LoadBitMap();
+	lava_rock_map.LoadBitmap();
 
 }
 
@@ -383,19 +379,9 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	// 移動彈跳的球
 	//
 	bball.OnMove();
-	practice.SetTopLeft(10, 10);
-	if (picX <= SIZE_Y)
-	{
-		picX += 5;
-		picY += 5;
-	}
-	else {
-		picX = picY = 0;
 
-	}
-	practice.SetTopLeft(picX,picY);
-	practice_2.SetTopLeft(100, 100);
-	c_practice.OnMove();
+	
+	
 }
 
 
@@ -424,87 +410,12 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
-	practice.ShowBitmap();
-	practice_2.ShowBitmap();
-	borader.ShowBitmap();
-	c_practice.OnShow();
-	gamemap.OnShow();
-}
-CPractice::CPractice()
-{
-	x = y = 0;
-
-}
-void CPractice::LoadBitmap()
-{
-	pic.LoadBitmap(IDB_SMILEFACE);
-}
-void CPractice::OnMove()
-{
-	if(y < SIZE_Y) {
-		y += 3;
-		x += 3;
-
-	}
-	else {
-		x = y = 0;
-	}
 
 
-}
-void CPractice::OnShow()
-{
-	pic.SetTopLeft(40, 0);
-	pic.ShowBitmap();
-
-}
-
-CGameMap::CGameMap() :X(20), Y(40), MW(120), MH(100)
-{
-	int map_init[4][5] = { {0,0,1,0,0},
-						   {0,1,2,1,0},
-						   {1,2,1,2,1},
-						   {2,1,2,1,2} };
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			map[i][j] = map_init[i][j];
-		}
-		
-
-	}
-}
-
-void CGameMap::LoadBitMap()
-{
-	blue.LoadBitmap(IDB_BLUE);
-	green.LoadBitmap(IDB_GREEN);
-}
-
-void CGameMap::OnShow()
-{
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 4; j++) {
-			switch (map[j][i]) {
-			case 0:
-				break;
-			case 1:
-				blue.SetTopLeft(X + MW * i, Y + MH * j);
-				blue.ShowBitmap();
-				
-				break;
-			case 2:
-				green.SetTopLeft(X + MW * i, Y + MH * j);
-				green.ShowBitmap();
-				break;
-			default:
-				ASSERT(0);
-			}
-		}
-	}
-
-
+	lava_rock_map.OnShow();
+	
+	
 }
 
 }
+
