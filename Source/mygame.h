@@ -71,6 +71,48 @@ namespace game_framework {
 		CMovingBitmap logo;								// csie的logo
 	};
 
+	///////////////////////////////////////////////////////////////////////////////
+	//Practise
+	//////////////////////////////////////////////////////////////////////////////
+	class CPractice {
+	public: 
+		CPractice();
+		void LoadBitmap();
+		void OnMove();
+		void OnShow();
+	private:
+		CMovingBitmap pic;
+		int x, y;
+	};
+	class CGameMap
+	{
+	public:
+		CGameMap();
+		void LoadBitMap();
+		void OnShow();
+	protected:
+		CMovingBitmap green, blue;
+		int map[4][5];
+		const int X, Y;
+		const int MH, MW; //地图的宽和高
+
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為游戲的游戲執行物件，主要的游戲程式都在這里
 	// 每個Member function的Implementation都要弄懂
@@ -101,6 +143,17 @@ namespace game_framework {
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
+
+		///////////////////////////////////////////////////////
+		//practise
+		///////////////////////////////////////////////////////
+		CMovingBitmap practice;
+		CMovingBitmap practice_2;
+		CMovingBitmap borader;
+		int picX, picY;
+		CPractice c_practice;
+		CGameMap gamemap;
+
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
