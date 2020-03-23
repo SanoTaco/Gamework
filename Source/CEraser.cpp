@@ -5,6 +5,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "CEraser.h"
+#include "Lava_Rock_1.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -39,7 +40,7 @@ namespace game_framework {
 	void CEraser::Initialize()
 	{
 		const int X_POS = 280;
-		const int Y_POS = 400;
+		const int Y_POS = 380;
 		x = X_POS;
 		y = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
@@ -47,24 +48,44 @@ namespace game_framework {
 
 	void CEraser::LoadBitmap()
 	{
-		animation.AddBitmap(IDB_ERASER1, RGB(255, 255, 255));
-		animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
-		animation.AddBitmap(IDB_ERASER3, RGB(255, 255, 255));
-		animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
+		animation.AddBitmap(IDB_HERO, RGB(0, 0, 0));
+		//animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
+		//animation.AddBitmap(IDB_ERASER3, RGB(255, 255, 255));
+		//animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
 	}
 
-	void CEraser::OnMove()
+	void CEraser::OnMove(Lava_Rock_1 *m)
 	{
 		const int STEP_SIZE = 2;
 		animation.OnMove();
-		if (isMovingLeft)
-			x -= STEP_SIZE;
-		if (isMovingRight)
-			x += STEP_SIZE;
-		if (isMovingUp)
-			y -= STEP_SIZE;
-		if (isMovingDown)
-			y += STEP_SIZE;
+		if (isMovingLeft) {
+			if (m->IsEmpty(x - 1, y) == true) {
+				x -= STEP_SIZE;
+			}
+			
+		}
+			
+		if (isMovingRight) {
+			if (m->IsEmpty(x + 1 + animation.Width(), y) == true) {
+				x += STEP_SIZE;
+			}
+			
+		}
+			
+		if (isMovingUp) {
+			if (m->IsEmpty(x, y - 1) == true) {
+				y -= STEP_SIZE;
+			}
+			
+		}
+			
+		if (isMovingDown) {
+			if (m->IsEmpty(x, y + 1 + animation.Height()) == true) {
+				y += STEP_SIZE;
+			}
+			
+		}
+			
 	}
 
 	void CEraser::SetMovingDown(bool flag)
@@ -97,4 +118,12 @@ namespace game_framework {
 		animation.SetTopLeft(x, y);
 		animation.OnShow();
 	}
+
+
+
+
+
+
+
+	
 }

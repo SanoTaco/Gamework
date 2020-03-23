@@ -129,7 +129,10 @@
     <ClCompile Include="Source\CBouncingBall.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Lava_Rock_Map.cpp">
+    <ClCompile Include="Source\Lava_Rock_1.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lava_Rock_2.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,13 +173,10 @@
     <ClInclude Include="Source\CBouncingBall.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h">
+    <ClInclude Include="Source\Lava_Rock_1.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Lava_Rock_Map.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character.h">
+    <ClInclude Include="Source\Lava_Rock_2.h">
       <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -214,6 +214,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Bitmaps\rock.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\CH.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\character.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

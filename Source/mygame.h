@@ -37,11 +37,14 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
-
+#include <vector>
 #include "CEraser.h"
 #include "CBall.h"
 #include "CBouncingBall.h"
-#include "Lava_Rock_Map.h"
+#include "Lava_Rock_1.h"
+#include "Lava_Rock_2.h"
+//#include "Hero.h"
+//#include "Character.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -124,7 +127,7 @@ namespace game_framework {
 	// 這個class為游戲的游戲執行物件，主要的游戲程式都在這里
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
-
+	
 	class CGameStateRun : public CGameState {
 	public:
 		CGameStateRun(CGame *g);
@@ -150,8 +153,11 @@ namespace game_framework {
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
-
-		Lava_Rock_Map lava_rock_map;
+		int				mapLevel = 0;
+		
+		vector<Lava_Rock_1 *> maps;
+		//Hero			hero;
+		//Character		*character;
 
 		///////////////////////////////////////////////////////
 		//practise

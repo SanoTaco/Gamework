@@ -192,11 +192,10 @@ CGameStateRun::CGameStateRun(CGame *g)
 : CGameState(g), NUMBALLS(28)
 {
 	ball = new CBall [NUMBALLS];
-
-	/////////////////////////////////////////////////
-	//practice
-	///////////////////////////////////////////
-	//picX = picY = 0;
+	maps.push_back(new Lava_Rock_1());
+	maps.push_back(new Lava_Rock_2());
+	
+	
 }
 
 CGameStateRun::~CGameStateRun()
@@ -265,6 +264,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	eraser.SetMovingLeft(true);
+	
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -329,8 +329,11 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	//
 
 
-	lava_rock_map.LoadBitmap();
-
+	
+	//character.LoadBitmap();
+	maps[0]->LoadBitmap();
+	maps[1]->LoadBitmap();
+	eraser.LoadBitmap();
 }
 
 
@@ -357,10 +360,11 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	//
 	// 移動擦子
 	//
-	eraser.OnMove();
+	//eraser.OnMove();
 	//
 	// 判斷擦子是否碰到球
 	//
+	/*
 	for (i=0; i < NUMBALLS; i++)
 		if (ball[i].IsAlive() && ball[i].HitEraser(&eraser)) {
 			ball[i].SetIsAlive(false);
@@ -375,11 +379,13 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 				GotoGameState(GAME_STATE_OVER);
 			}
 		}
+	*/
+	
 	//
 	// 移動彈跳的球
 	//
-	bball.OnMove();
-
+	//bball.OnMove();
+	eraser.OnMove(maps[mapLevel]);
 	
 	
 }
@@ -401,8 +407,8 @@ void CGameStateRun::OnShow()
 	hits_left.ShowBitmap();
 	for (int i=0; i < NUMBALLS; i++)
 		ball[i].OnShow();				// 貼上第i號球
-	bball.OnShow();						// 貼上彈跳的球
-	eraser.OnShow();					// 貼上擦子
+	//bball.OnShow();						// 貼上彈跳的球
+	//eraser.OnShow();					// 貼上擦子
 	//
 	//  貼上左上及右下角落的圖
 	//
@@ -411,10 +417,17 @@ void CGameStateRun::OnShow()
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
 
-
-	lava_rock_map.OnShow();
+	if (maps[mapLevel]->isEnterDoor( &eraser)) {
+		mapLevel++;
+		maps[mapLevel]->OnShow();
+	}
+	else {
+		maps[mapLevel]->OnShow();
+		//eraser.SetXY(eraser.GetX1() - 640, eraser.GetY1());
+	}
 	
-	
+	//hero.OnShow();
+	eraser.OnShow();
 }
 
 }

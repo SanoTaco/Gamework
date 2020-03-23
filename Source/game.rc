@@ -38,6 +38,10 @@ IDB_LAVA_1              BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 
 IDB_ROCK                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\rock.bmp"
 
+IDB_CHARACTER           BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\CH.bmp"
+
+IDB_HERO                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\character.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
