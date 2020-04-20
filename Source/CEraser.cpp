@@ -6,6 +6,7 @@
 #include "gamelib.h"
 #include "CEraser.h"
 #include "Lava_Rock_1.h"
+#include "CBullet.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -41,6 +42,9 @@ namespace game_framework {
 	{
 		const int X_POS = 280;
 		const int Y_POS = 380;
+		isAlive = true;
+		isInvicible = false;
+		hp = 3;
 		x = X_POS;
 		y = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
@@ -52,11 +56,15 @@ namespace game_framework {
 		//animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
 		//animation.AddBitmap(IDB_ERASER3, RGB(255, 255, 255));
 		//animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
+
+		invicible.AddBitmap(IDB_INVICIBLE, RGB(255, 255,255));
+		invicible.AddBitmap(IDB_HERO, RGB(0, 0, 0));
+		invicible.AddBitmap(IDB_INVICIBLE, RGB(255, 255, 255));
 	}
 
 	void CEraser::OnMove(Lava_Rock_1 *m)
 	{
-		const int STEP_SIZE = 2;
+		const int STEP_SIZE = 5;
 		animation.OnMove();
 		if (isMovingLeft) {
 			if (m->IsEmpty(x - 1, y) == true) {
@@ -113,10 +121,81 @@ namespace game_framework {
 		x = nx; y = ny;
 	}
 
-	void CEraser::OnShow()
+	void CEraser::SetFacingRight(bool flag)
 	{
-		animation.SetTopLeft(x, y);
-		animation.OnShow();
+		isFaceToRight = flag;
+	}
+
+	void CEraser::SetFacingUp(bool flag)
+	{
+		isFaceToUp = flag;
+	}
+
+	bool CEraser::IsAlive()
+	{
+		return isAlive;
+	}
+
+	void CEraser::SetIsAlive(bool flag)
+	{
+		isAlive = flag;
+	}
+
+	
+
+	bool CEraser::GetIsFaceToRight()
+	{
+		return isFaceToRight;
+	}
+
+	bool CEraser::GetIsFaceToUp()
+	{
+		return isFaceToUp;
+	}
+
+	bool CEraser::IsMovingRight()
+	{
+		return isMovingRight;
+	}
+
+	void CEraser::SetIsInvincible(bool flag)
+	{
+		isInvicible = flag;
+	}
+
+	void CEraser::addHP(int num)
+	{
+		hp += num;
+	}
+
+	int CEraser::GetHP()
+	{
+		return hp;
+	}
+
+	bool CEraser::GetIsInvincible()
+	{
+		return isInvicible;
+	}
+
+	void CEraser::OnShow(Lava_Rock_1*map)
+	{
+		if (!IsAlive()) {
+			return;
+		}
+		else {
+			if (isInvicible) {
+				invicible.SetTopLeft(x, y);
+				invicible.OnShow();
+			}
+			else {
+				animation.SetTopLeft(x, y);
+				animation.OnShow();
+			}
+		}
+		
+
+		
 	}
 
 

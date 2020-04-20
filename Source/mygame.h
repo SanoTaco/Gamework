@@ -43,6 +43,8 @@
 #include "CBouncingBall.h"
 #include "Lava_Rock_1.h"
 #include "Lava_Rock_2.h"
+#include "CBullet.h"
+#include "Enemy.h"
 //#include "Hero.h"
 //#include "Character.h"
 
@@ -147,15 +149,19 @@ namespace game_framework {
 	private:
 		const int		NUMBALLS;	// 球的總數
 		CMovingBitmap	background;	// 背景圖
-		CMovingBitmap	help;		// 說明圖
-		CBall			*ball;		// 球的陣列
+		CMovingBitmap	help;		// 說明
+		int				countDownTime = 0;
+		//CBall			*ball;		// 球的陣列
 		CMovingBitmap	corner;		// 角落圖
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
-		CBouncingBall   bball;		// 反覆彈跳的球
-		int				mapLevel = 0;
-		
+		//CBouncingBall   bball;		// 反覆彈跳的球
+		int				mapLevel;
+		int				invicibleCounter = 0;
+		int				delayCounter = 0;
+		CBullet			*bullet;
 		vector<Lava_Rock_1 *> maps;
+		vector<AbstractEnemy*> enemies;
 		//Hero			hero;
 		//Character		*character;
 

@@ -8,7 +8,7 @@
 
 game_framework::Lava_Rock_2::Lava_Rock_2() :X(0), Y(0), MW(64), MH(48)
 {
-	int map_init[10][10] = { {1,1,1,1,1,1,1,1,1,1} ,    //row 1
+	int map_init[10][10] = {		 {1,1,1,1,1,1,1,1,1,1} ,    //row 1
 									 {1,0,0,0,0,0,0,0,0,1} ,	//row 2
 									 {1,0,1,1,0,0,1,1,0,1} ,	//row 3
 									 {1,0,1,0,0,0,0,1,0,1} ,	//row 4
@@ -23,8 +23,54 @@ game_framework::Lava_Rock_2::Lava_Rock_2() :X(0), Y(0), MW(64), MH(48)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			lavaMap[i][j] = map_init[i][j];
+			lavaMap[i][j] = map_init[j][i];
 
 		}
 	}
+}
+
+void game_framework::Lava_Rock_2::OnMove()
+{
+}
+
+void game_framework::Lava_Rock_2::OnShow()
+{
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			switch (lavaMap[i][j]) {
+			case -1:
+				break;
+			case 0:
+				rock.SetTopLeft(X + MW * i, Y + MH * j);
+				rock.ShowBitmap();
+				break;
+			case 1:
+				lava.SetTopLeft(X + MW * i, Y + MH * j);
+				lava.ShowBitmap();
+				break;
+			default:
+				ASSERT(-1);
+
+
+
+			}
+		}
+	}
+}
+
+bool game_framework::Lava_Rock_2::IsEmpty(int x, int y)
+{
+	int gx = x / 64; // 轉換為格座標(整數除法)
+	int gy = y / 48; // 轉換為格座標(整數除法)
+	return lavaMap[gx][gy] == 0; // 假設 0 代表空的
+}
+
+int game_framework::Lava_Rock_2::ScreenX(int & x)
+{
+	return x;
+}
+
+int game_framework::Lava_Rock_2::ScreenY(int & y)
+{
+	return y;
 }

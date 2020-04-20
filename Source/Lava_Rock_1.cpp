@@ -25,12 +25,16 @@ game_framework::Lava_Rock_1::Lava_Rock_1():X(0), Y(0), MW(64), MH(48)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-		lavaMap[i][j] = map_init[i][j];
+		lavaMap[i][j] = map_init[j][i];
 
 		}
 	}
 
 
+}
+
+void game_framework::Lava_Rock_1::OnMove()
+{
 }
 
 void game_framework::Lava_Rock_1::LoadBitmap()
@@ -43,7 +47,7 @@ void game_framework::Lava_Rock_1::OnShow()
 {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			switch (lavaMap[j][i]) {
+			switch (lavaMap[i][j]) {
 			case -1:
 				break;
 			case 0:
@@ -71,22 +75,33 @@ bool game_framework::Lava_Rock_1::IsEmpty(int x, int y)
 	return lavaMap[gx][gy] == 0; // 假設 0 代表空的
 }
 
-bool game_framework::Lava_Rock_1::isEnterDoor(CEraser * hero)
+
+
+int game_framework::Lava_Rock_1::ScreenX(int & x)
 {
-	
+	return x;
+}
+
+int game_framework::Lava_Rock_1::ScreenY(int & y)
+{
+	return y;
+}
+
+bool game_framework::Lava_Rock_1::IsEnterTheDoor(CEraser * hero)
+{
 	return HitRectangle(hero->GetX1(), hero->GetY1(), hero->GetX2(), hero->GetY2());
 }
 
 bool game_framework::Lava_Rock_1::HitRectangle(int tx1, int ty1, int tx2, int ty2)
 {
 	//int x1 = 1855;				//门的左上角x坐标
-	int x1 = 512;				//门的左上角x坐标
+	int x1 = 576;				//门的左上角x坐标
 	//int y1 = 359;				//门的左上角y坐标
-	int y1 = 384;				//门的左上角y坐标
+	int y1 = 288;				//门的左上角y坐标
 	//int x2 = 1919;	// 门的右下角x坐标
 	int x2 = 640;	// 门的右下角x坐标
 	//int y2 = 433;	// 门的右下角y坐标
-	int y2 = 480;	// 门的右下角y坐标
+	int y2 = 432;	// 门的右下角y坐标
 								//
 								// 檢主角的矩形與參數矩形是否有交集
 								//

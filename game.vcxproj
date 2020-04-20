@@ -258,11 +258,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\audio.cpp" />
+    <ClCompile Include="Source\CBullet.cpp" />
     <ClCompile Include="Source\CBall.cpp" />
     <ClCompile Include="Source\CBouncingBall.cpp" />
     <ClCompile Include="Source\CEraser.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\game.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -309,9 +311,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
+    <ClInclude Include="Source\CBullet.h" />
     <ClInclude Include="Source\CBall.h" />
     <ClInclude Include="Source\CBouncingBall.h" />
     <ClInclude Include="Source\CEraser.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
@@ -333,6 +337,8 @@
   <ItemGroup>
     <Image Include="Bitmaps\CH.bmp" />
     <Image Include="Bitmaps\character.bmp" />
+    <Image Include="Bitmaps\duck.bmp" />
+    <Image Include="Bitmaps\InvicibleHero.bmp" />
     <Image Include="Bitmaps\lava_1.bmp" />
     <Image Include="Bitmaps\rock.bmp" />
     <Image Include="res\bitmap3.bmp" />
@@ -341,6 +347,9 @@
     <Image Include="res\bmp00001.bmp" />
     <Image Include="res\bmp00002.bmp" />
     <Image Include="res\borader.bmp" />
+    <Image Include="res\bullet_0.bmp" />
+    <Image Include="res\BULLET_1.bmp" />
+    <Image Include="res\EXPLOSION.bmp" />
     <Image Include="res\green.bmp" />
     <Image Include="RES\史莱姆.bmp" />
   </ItemGroup>

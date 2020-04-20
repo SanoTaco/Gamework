@@ -135,6 +135,12 @@
     <ClCompile Include="Source\Lava_Rock_2.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CBullet.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -179,6 +185,12 @@
     <ClInclude Include="Source\Lava_Rock_2.h">
       <Filter>MyGame</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CBullet.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
@@ -220,6 +232,21 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Bitmaps\character.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\BULLET_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\EXPLOSION.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bullet_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\duck.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\InvicibleHero.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

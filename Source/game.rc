@@ -42,6 +42,16 @@ IDB_CHARACTER           BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 
 IDB_HERO                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\character.bmp"
 
+IDB_BULLET_1            BITMAP                  "..\\res\\BULLET_1.bmp"
+
+IDB_EXPLOSION           BITMAP                  "..\\res\\EXPLOSION.bmp"
+
+IDB_BULLET_0            BITMAP                  "..\\res\\bullet_0.bmp"
+
+IDB_DUCK                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\duck.bmp"
+
+IDB_INVICIBLE           BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\InvicibleHero.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
