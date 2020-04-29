@@ -4,7 +4,8 @@ namespace game_framework {
 	// 這個class提供可以用鍵盤或滑鼠控制的擦子
 	// 看懂就可以改寫成自己的程式了
 	/////////////////////////////////////////////////////////////////////////////
-	class Lava_Rock_1;
+	class Map;
+	class AbstractItem;
 	class CEraser
 	{
 	public:
@@ -16,8 +17,8 @@ namespace game_framework {
 		int  GetY2();					// 擦子右下角 y 座標
 		void Initialize();				// 設定擦子為初始值
 		void LoadBitmap();				// 載入圖形
-		void OnMove(Lava_Rock_1 *m);					// 移動擦子
-		void OnShow(Lava_Rock_1* map);					// 將擦子圖形貼到畫面
+		void OnMove(Map *m);					// 移動擦子
+		void OnShow(Map* map);					// 將擦子圖形貼到畫面
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
@@ -35,10 +36,12 @@ namespace game_framework {
 		int GetHP();
 		bool GetIsInvincible();
 		bool IsMovingUp() { return isMovingUp; };
+		bool GetItem(AbstractItem* item);
 		
 	protected:
 		CAnimation animation;		// 擦子的動畫	
 		CAnimation	invicible;
+		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);
 		int hp;
 		int x, y;					// 擦子左上角座標
 		bool isMovingDown;			// 是否正在往下移動

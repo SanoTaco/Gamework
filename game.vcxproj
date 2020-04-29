@@ -280,6 +280,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Lava_Rock_1.cpp" />
     <ClCompile Include="Source\Lava_Rock_2.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
@@ -319,6 +320,7 @@
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
+    <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\Lava_Rock_1.h" />
     <ClInclude Include="Source\Lava_Rock_2.h" />
     <ClInclude Include="Source\MainFrm.h" />
@@ -335,12 +337,15 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Bitmaps\apple.bmp" />
     <Image Include="Bitmaps\CH.bmp" />
     <Image Include="Bitmaps\character.bmp" />
     <Image Include="Bitmaps\duck.bmp" />
     <Image Include="Bitmaps\InvicibleHero.bmp" />
     <Image Include="Bitmaps\lava_1.bmp" />
+    <Image Include="Bitmaps\points.bmp" />
     <Image Include="Bitmaps\rock.bmp" />
+    <Image Include="Bitmaps\stars.bmp" />
     <Image Include="res\bitmap3.bmp" />
     <Image Include="res\bitmap4.bmp" />
     <Image Include="res\blue.bmp" />

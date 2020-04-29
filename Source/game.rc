@@ -52,6 +52,18 @@ IDB_DUCK                BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 
 IDB_INVICIBLE           BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\InvicibleHero.bmp"
 
+IDB_ONEHEART            BITMAP                  "..\\res\\bmp00001.bmp"
+
+IDB_TWOHEART            BITMAP                  "..\\res\\bitmap4.bmp"
+
+IDB_THREEHEART          BITMAP                  "..\\res\\bmp00002.bmp"
+
+IDB_STAR                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\stars.bmp"
+
+IDB_APPLE               BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\apple.bmp"
+
+IDB_POINT               BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\points.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -37,7 +37,7 @@ void game_framework::AbstractEnemy::SetIsAlive(bool alive)
 	is_alive = alive;
 }
 
-void game_framework::AbstractEnemy::OnMove(Lava_Rock_1 * m)
+void game_framework::AbstractEnemy::OnMove(Map * m)
 {
 	if (!IsAlive()) {
 		return;
@@ -126,7 +126,7 @@ void game_framework::AbstractEnemy::OnMove(Lava_Rock_1 * m)
 	}
 }
 
-void game_framework::AbstractEnemy::OnShow(Lava_Rock_1 * m)
+void game_framework::AbstractEnemy::OnShow(Map * m)
 {
 	if (!IsAlive()) {
 		return;

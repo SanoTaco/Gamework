@@ -1,7 +1,7 @@
 #pragma once
 namespace game_framework {
 
-	class Lava_Rock_1;
+	class Map;
 	class CEraser;
 	class CBullet
 	{
@@ -11,7 +11,7 @@ namespace game_framework {
 		bool IsAlive();											// 是否活著
 		void LoadBitmap();                                      // 載入圖形
 		void OnMove(CEraser* hero);						   // 移動
-		void OnShow(Lava_Rock_1 *m);											// 將圖形貼到畫面
+		void OnShow(Map *m);											// 將圖形貼到畫面
 		void SetIsAlive(bool alive);							// 設定是否活著
 		void SetXY(int nx, int ny);                            //设置子弹的起始位置，应为人物的右边
 		int  GetX1();					                    // 子弹左上角 x 座標
@@ -19,7 +19,7 @@ namespace game_framework {
 		int  GetX2();					                   // 子弹右下角 x 座標
 		int  GetY2();					                   // 子弹右下角 y 座標
 		void SetTopLeft(int x, int y);
-		void OnKeyDown(UINT nChar, CEraser* hero, Lava_Rock_1* map);        //按下回车的时候发射子弹
+		void OnKeyDown(UINT nChar, CEraser* hero, Map* map);        //按下回车的时候发射子弹
 
 		void SetFaceRight(bool flag);                   //设置子弹向左还是右
 		void SetFaceUp(bool flag);

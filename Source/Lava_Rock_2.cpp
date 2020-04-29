@@ -29,9 +29,6 @@ game_framework::Lava_Rock_2::Lava_Rock_2() :X(0), Y(0), MW(64), MH(48)
 	}
 }
 
-void game_framework::Lava_Rock_2::OnMove()
-{
-}
 
 void game_framework::Lava_Rock_2::OnShow()
 {
@@ -56,6 +53,12 @@ void game_framework::Lava_Rock_2::OnShow()
 			}
 		}
 	}
+}
+
+void game_framework::Lava_Rock_2::LoadBitmap()
+{
+	rock.LoadBitmap(IDB_ROCK);
+	lava.LoadBitmap(IDB_LAVA_1);
 }
 
 bool game_framework::Lava_Rock_2::IsEmpty(int x, int y)

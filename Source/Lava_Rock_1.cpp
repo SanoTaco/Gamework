@@ -18,8 +18,8 @@ game_framework::Lava_Rock_1::Lava_Rock_1():X(0), Y(0), MW(64), MH(48)
 							 {1,0,0,0,1,1,0,0,0,1} ,	//row 6
 							 {1,0,0,0,0,0,0,0,0,0} ,	//row 7
 							 {1,0,0,0,0,0,0,0,0,0} ,	//row 8
-							 {1,1,1,1,0,0,0,0,0,0} ,	//row 9
-							 {1,1,1,1,1,1,1,1,1,1} };	//row 10
+							 {1,1,1,1,1,1,1,1,1,1} ,	//row 9
+							 {0,0,0,0,0,0,0,0,0,0} };	//row 10
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -33,9 +33,6 @@ game_framework::Lava_Rock_1::Lava_Rock_1():X(0), Y(0), MW(64), MH(48)
 
 }
 
-void game_framework::Lava_Rock_1::OnMove()
-{
-}
 
 void game_framework::Lava_Rock_1::LoadBitmap()
 {
@@ -86,13 +83,40 @@ int game_framework::Lava_Rock_1::ScreenY(int & y)
 {
 	return y;
 }
-
+/*
 bool game_framework::Lava_Rock_1::IsEnterTheDoor(CEraser * hero)
 {
 	return HitRectangle(hero->GetX1(), hero->GetY1(), hero->GetX2(), hero->GetY2());
 }
 
 bool game_framework::Lava_Rock_1::HitRectangle(int tx1, int ty1, int tx2, int ty2)
+{
+	//int x1 = 1855;				//门的左上角x坐标
+	int x1 = 576;				//门的左上角x坐标
+	//int y1 = 359;				//门的左上角y坐标
+	int y1 = 288;				//门的左上角y坐标
+	//int x2 = 1919;	// 门的右下角x坐标
+	int x2 = 640;	// 门的右下角x坐标
+	//int y2 = 433;	// 门的右下角y坐标
+	int y2 = 432;	// 门的右下角y坐标
+								//
+								// 檢主角的矩形與參數矩形是否有交集
+								//
+	return (tx1 >= x1 && tx2 <= x2 && ty1 >= y1 && ty2 <= y2);//当主角图形的四个角，完全进入门框时，才算是进门了。
+}*/
+
+
+
+void game_framework::Map::OnMove()
+{
+}
+
+bool game_framework::Map::IsEnterTheDoor(CEraser * hero)
+{
+	return HitRectangle(hero->GetX1(), hero->GetY1(), hero->GetX2(), hero->GetY2());
+}
+
+bool game_framework::Map::HitRectangle(int tx1, int ty1, int tx2, int ty2)
 {
 	//int x1 = 1855;				//门的左上角x坐标
 	int x1 = 576;				//门的左上角x坐标

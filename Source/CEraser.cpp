@@ -7,6 +7,7 @@
 #include "CEraser.h"
 #include "Lava_Rock_1.h"
 #include "CBullet.h"
+#include "Item.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -62,7 +63,7 @@ namespace game_framework {
 		invicible.AddBitmap(IDB_INVICIBLE, RGB(255, 255, 255));
 	}
 
-	void CEraser::OnMove(Lava_Rock_1 *m)
+	void CEraser::OnMove(Map *m)
 	{
 		const int STEP_SIZE = 5;
 		animation.OnMove();
@@ -178,7 +179,33 @@ namespace game_framework {
 		return isInvicible;
 	}
 
-	void CEraser::OnShow(Lava_Rock_1*map)
+	bool CEraser::GetItem(AbstractItem * item)
+	{
+		if (!item->GetIsAlive()) {
+			return false;
+		}
+		else {
+			return HitRectangle(item->GetX1(), item->GetY1(), item->GetX2(), item->GetY2());
+		}
+	}
+
+	bool CEraser::HitRectangle(int tx1, int ty1, int tx2, int ty2)
+	{
+		int x1 = x;				// 怪物的左上角x座標
+
+		int y1 = y;				//怪物的左上角y座標
+
+		int x2 = x1 + animation.Width();	// 怪物的右下角x座標
+
+		int y2 = y1 + animation.Height();	// 怪物的右下角y座標
+
+									//
+									// 檢敌人的矩形與參數矩形是否有交集
+									//
+		return (tx2 >= x1 && tx1 <= x2 && ty2 >= y1 && ty1 <= y2);//当子弹四个角和四个边，有一个碰到了敌人就算击中敌人
+	}
+
+	void CEraser::OnShow(Map* map)
 	{
 		if (!IsAlive()) {
 			return;

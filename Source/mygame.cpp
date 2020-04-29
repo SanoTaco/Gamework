@@ -197,13 +197,21 @@ CGameStateRun::CGameStateRun(CGame *g)
 	maps.push_back(new Lava_Rock_2());
 	bullet = new CBullet();
 	enemies.push_back(new EnemyDuck());
-	
+	items.push_back(new Item());
+	items.push_back(new Potion());
+	items.push_back(new Star());
 }
 
 CGameStateRun::~CGameStateRun()
 {
 	
 	delete bullet;
+	/*
+	vector<AbstractItem*>::const_iterator itemiter;
+	for (itemiter = items.begin(); itemiter != items.end(); itemiter++) {
+		delete (*itemiter);
+	}*/
+	
 }
 
 void CGameStateRun::OnBeginState()
@@ -221,14 +229,35 @@ void CGameStateRun::OnBeginState()
 	background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
 	help.SetTopLeft(0, SIZE_Y - help.Height());			// 設定說明圖的起始座標
 	hits_left.SetInteger(HITS_LEFT);					// 指定剩下的撞擊數
-	hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
+	//hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
+	points.SetInteger(point);
+	points.SetTopLeft(590,0);
 	CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
 
 
-	enemies[0]->SetIsAlive(true);
-	enemies[0]->SetXY(400, 400);
+	
+	if (mapLevel == 0) {
+		enemies[0]->SetIsAlive(true);
+		enemies[0]->SetXY(384,384 );
+		items[0]->SetIsAlive(true);
+		items[0]->SetXY(70, 50);
+		items[1]->SetIsAlive(true);
+		items[1]->SetXY(70, 150);
+		items[2]->SetIsAlive(true);
+		items[2]->SetXY(70, 100);
+	}
+	else {
+		enemies[0]->SetIsAlive(true);
+		enemies[0]->SetXY(320, 336);
+		
+		//items[1]->SetIsAlive(true);
+		items[1]->SetXY(70, 100);
+	}
+	
+	
+	
 }
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
@@ -239,7 +268,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const int KEY_SPACE = 0x20;  //keyboard空格键
 
 	CEraser* hero = &eraser;
-	Lava_Rock_1* map = maps[mapLevel];
+	Map* map = maps[mapLevel];
 
 	if (nChar == KEY_LEFT) {
 		eraser.SetMovingLeft(true);
@@ -324,8 +353,16 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 {
-	maps[0]->LoadBitmap();
-	maps[1]->LoadBitmap();
+	//maps[0]->LoadBitmap();
+	//maps[1]->LoadBitmap();
+	vector<Map*>::const_iterator mapit;
+	vector<AbstractItem*>::const_iterator it;
+	for (it = items.begin(); it != items.end(); it++) {
+		(*it)->LoadBitmap();
+	}
+	for (mapit = maps.begin(); mapit != maps.end(); mapit++) {
+		(*mapit)->LoadBitmap();
+	}
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩游戲的人
 	//     等的不耐煩，游戲會出現「Loading ...」，顯示Loading的進度。
@@ -349,7 +386,8 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	corner.LoadBitmap(IDB_CORNER);							// 載入角落圖形
 	corner.ShowBitmap(background);							// 將corner貼到background
 										// 載入圖形
-	hits_left.LoadBitmap();
+	//hits_left.LoadBitmap();
+	points.LoadBitmap();
 	CAudio::Instance()->Load(AUDIO_DING, "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
 	CAudio::Instance()->Load(AUDIO_LAKE, "sounds\\lake.mp3");	// 載入編號1的聲音lake.mp3
 	CAudio::Instance()->Load(AUDIO_NTUT, "sounds\\ntut.mid");	// 載入編號2的聲音ntut.mid
@@ -357,13 +395,14 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
 	//
 
-
-	
-	//character.LoadBitmap();
+	oneHeart.LoadBitmap(IDB_ONEHEART, RGB(255, 255, 255));
+	twoHeart.LoadBitmap(IDB_TWOHEART, RGB(255, 255, 255));
+	threeHeart.LoadBitmap(IDB_THREEHEART, RGB(255, 255, 255));
 	
 	eraser.LoadBitmap();
 	bullet->LoadBitmap();
 	enemies[0]->LoadBitmap();
+	
 }
 
 
@@ -383,9 +422,11 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 		background.SetTopLeft(60 ,-background.Height());
 	background.SetTopLeft(background.Left(),background.Top()+1);
 	vector<AbstractEnemy*> ::const_iterator iter;
+	vector<AbstractItem *>::const_iterator item_iter;
 	CEraser* hero = &eraser;
 	if (mapLevel == 0) {
-		maps[mapLevel]->OnMove(); eraser.OnMove(maps[mapLevel]);
+		maps[mapLevel]->OnMove();
+		eraser.OnMove(maps[mapLevel]);
 		 //hero in the first map
 		
 		
@@ -410,11 +451,45 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 			mapLevel++;
 			hero->SetXY(hero->GetX1()-300, hero->GetY1());
 		}
+		
+
+		
+		for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
+			if (hero->IsAlive() && hero->GetItem(*item_iter) && (*item_iter)->GetIsAlive()) {
+				if ((*item_iter)->Usage() == 1) {
+					// its a potion
+					if (hits_left.GetInteger() < 3) {
+						hits_left.Add((*item_iter)->Effect());
+					}
+
+				}
+				if ((*item_iter)->Usage() == 2) {
+					//it can enchance hero
+					hero->SetIsInvincible(true);
+					invicibleCounter++;
+					if (invicibleCounter >= 60 && invicibleCounter <= 70)
+					{
+						hero->SetIsInvincible(false);
+						invicibleCounter = 0;
+					}
+				}
+				if ((*item_iter)->Usage() == 0) {
+					//points
+					points.Add( (*item_iter)->Effect());
+				}
+				(*item_iter)->SetIsAlive(false);
+			}
+			
+		}
+		
+		
+
 
 		for (iter = enemies.begin(); iter != enemies.end(); iter++) {
 			if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
 				(*iter)->SetIsAlive(false);//敌人死了
 				bullet->SetIsAlive(false);//子弹死了
+				points.Add(1);
 			}
 			if (hero->IsAlive() && (*iter)->touchHero(hero)) {
 				hero->SetIsInvincible(true);
@@ -444,9 +519,77 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	else {
 		maps[mapLevel]->OnMove();
 		eraser.OnMove(maps[mapLevel]); //hero in the second map
-		enemies[0]->OnMove(maps[mapLevel]);
+		enemies[0]->SetXY(320, 336);
+		
+
+		if (enemies[0]->Halt()) {
+			delayCounter++;
+			if (delayCounter > 30 && delayCounter < 60) {
+				enemies[0]->SetHalt(false);
+				delayCounter = 0;
+			}
+		}
+		else
+		{
+			enemies[0]->OnMove(maps[mapLevel]);
+		}
 
 		bullet->OnMove(hero);
+		for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
+			if (hero->IsAlive() && hero->GetItem(*item_iter) && (*item_iter)->GetIsAlive()) {
+				if ((*item_iter)->Usage() == 1) {
+					// its a potion
+					if (hits_left.GetInteger() < 3) {
+						hits_left.Add((*item_iter)->Effect());
+					}
+
+				}
+				if ((*item_iter)->Usage() == 2) {
+					//it can enchance hero
+					hero->SetIsInvincible(true);
+					invicibleCounter++;
+					if (invicibleCounter >= 60 && invicibleCounter <= 70)
+					{
+						hero->SetIsInvincible(false);
+						invicibleCounter = 0;
+					}
+				}
+				if ((*item_iter)->Usage() == 0) {
+					//points
+					points.Add((*item_iter)->Effect());
+				}
+				(*item_iter)->SetIsAlive(false);
+			}
+
+		}
+		for (iter = enemies.begin(); iter != enemies.end(); iter++) {
+			if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
+				(*iter)->SetIsAlive(false);//敌人死了
+				bullet->SetIsAlive(false);//子弹死了
+				points.Add(1);
+			}
+			if (hero->IsAlive() && (*iter)->touchHero(hero)) {
+				hero->SetIsInvincible(true);
+				hero->addHP(-1);
+				hits_left.Add(-1);
+
+				if (hits_left.GetInteger() <= 0) {
+					hero->SetIsAlive(false);
+					GotoGameState(GAME_STATE_OVER);
+				}
+			}
+			if (hero->GetIsInvincible())                                      //主角无敌的时间
+			{
+				invicibleCounter++;
+				if (invicibleCounter >= 60 && invicibleCounter <= 70)
+				{
+					hero->SetIsInvincible(false);
+					invicibleCounter = 0;
+				}
+			}
+
+
+		}
 
 	}
 	
@@ -468,7 +611,7 @@ void CGameStateRun::OnShow()
 	//
 	background.ShowBitmap();			// 貼上背景圖
 	help.ShowBitmap();					// 貼上說明圖
-	hits_left.ShowBitmap();
+	//hits_left.ShowBitmap();
 	
 	corner.SetTopLeft(0,0);
 	corner.ShowBitmap();
@@ -483,6 +626,9 @@ void CGameStateRun::OnShow()
 		eraser.OnShow(maps[0]);
 		bullet->OnShow(maps[mapLevel]);
 		enemies[0]->OnShow(maps[0]);
+		items[0]->OnShow(maps[0]);
+		items[1]->OnShow(maps[0]);
+		items[2]->OnShow(maps[0]);
 		break;
 	case 1:
 		
@@ -490,26 +636,26 @@ void CGameStateRun::OnShow()
 		eraser.OnShow(maps[1]);
 		bullet->OnShow(maps[mapLevel]);
 		enemies[0]->OnShow(maps[1]);
+		items[1]->SetIsAlive(true);
+		items[1]->OnShow(maps[1]);
 		break;
 	default:
 		break;
 	}
+	if (hits_left.GetInteger() == 3) {
+		threeHeart.SetTopLeft(0, 0);
+		threeHeart.ShowBitmap();
+	}
+	if (hits_left.GetInteger() == 2) {
+		twoHeart.SetTopLeft(0, 0);
+		twoHeart.ShowBitmap();
+	}
+	if (hits_left.GetInteger() == 1) {
+		oneHeart.SetTopLeft(0, 0);
+		oneHeart.ShowBitmap();
+	}
 
-/*
-if (maps[mapLevel]->isEnterDoor( &eraser)) {
-		mapLevel++;
-		maps[mapLevel]->OnShow();
-		
-	}
-	else {
-		maps[mapLevel]->OnShow();
-		//eraser.SetXY(eraser.GetX1() - 640, eraser.GetY1());
-		eraser.OnShow();
-	}
-*/
-	
-	
-	//hero.OnShow();
+	points.ShowBitmap();
 	
 }
 

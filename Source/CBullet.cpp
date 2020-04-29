@@ -91,7 +91,7 @@ namespace game_framework {
 		
 	}
 
-	void CBullet::OnShow(Lava_Rock_1 *m)
+	void CBullet::OnShow(Map *m)
 	{
 		if(!IsAlive()) {
 			//explosion.ShowBitmap();
@@ -159,7 +159,7 @@ namespace game_framework {
 		return isFaceToUp;
 	}
 
-	void CBullet::OnKeyDown(UINT nChar, CEraser *hero, Lava_Rock_1 *map)
+	void CBullet::OnKeyDown(UINT nChar, CEraser *hero, Map *map)
 	{
 		const int KEY_SPACE = 0x20;
 

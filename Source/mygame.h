@@ -45,8 +45,7 @@
 #include "Lava_Rock_2.h"
 #include "CBullet.h"
 #include "Enemy.h"
-//#include "Hero.h"
-//#include "Character.h"
+#include "Item.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -155,13 +154,19 @@ namespace game_framework {
 		CMovingBitmap	corner;		// 角落圖
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
+		CInteger		points;
 		//CBouncingBall   bball;		// 反覆彈跳的球
 		int				mapLevel;
 		int				invicibleCounter = 0;
 		int				delayCounter = 0;
+		int				point = 0;
 		CBullet			*bullet;
-		vector<Lava_Rock_1 *> maps;
+		vector<Map *> maps;
 		vector<AbstractEnemy*> enemies;
+		vector<AbstractItem*>	items;
+		CMovingBitmap	oneHeart;
+		CMovingBitmap	twoHeart;
+		CMovingBitmap	threeHeart;
 		//Hero			hero;
 		//Character		*character;
 
