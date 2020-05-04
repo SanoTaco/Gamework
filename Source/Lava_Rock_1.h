@@ -22,21 +22,18 @@ namespace game_framework {
 	{
 	public:
 		Lava_Rock_1();
-		
 		void LoadBitmap();
 		void OnShow();
 		bool IsEmpty(int x, int y);
-		
 		int ScreenX(int &x);
 		int ScreenY(int &y);
 		//bool IsEnterTheDoor(CEraser *hero);                      //ÓëÖ÷½ÇµÄÅö×²
 		//bool HitRectangle(int tx1, int ty1, int tx2, int ty2);
-		
 	private:
 		const int X, Y;
 		const int MW, MH;
 		int lavaMap[10][10];
-		CMovingBitmap lava, rock;
+		CMovingBitmap lava, rock,blackground;
 		
 	};
 

@@ -264,5 +264,14 @@
     <Image Include="Bitmaps\points.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Bitmaps\enchanted_monsster_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00003.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\ATK.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

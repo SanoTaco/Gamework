@@ -41,8 +41,9 @@ namespace game_framework {
 
 	void CEraser::Initialize()
 	{
-		const int X_POS = 280;
-		const int Y_POS = 380;
+		const int X_POS = 128;
+		const int Y_POS = 300;
+		atk = 1;
 		isAlive = true;
 		isInvicible = false;
 		hp = 3;
@@ -187,6 +188,16 @@ namespace game_framework {
 		else {
 			return HitRectangle(item->GetX1(), item->GetY1(), item->GetX2(), item->GetY2());
 		}
+	}
+
+	int CEraser::GetATK()
+	{
+		return atk;
+	}
+
+	void CEraser::SetATK(int num)
+	{
+		atk = num;
 	}
 
 	bool CEraser::HitRectangle(int tx1, int ty1, int tx2, int ty2)

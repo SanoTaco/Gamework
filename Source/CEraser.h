@@ -37,12 +37,15 @@ namespace game_framework {
 		bool GetIsInvincible();
 		bool IsMovingUp() { return isMovingUp; };
 		bool GetItem(AbstractItem* item);
+		int GetATK();
+		void SetATK(int num);
 		
 	protected:
 		CAnimation animation;		// 擦子的動畫	
 		CAnimation	invicible;
 		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);
 		int hp;
+		int atk;
 		int x, y;					// 擦子左上角座標
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動
@@ -52,6 +55,7 @@ namespace game_framework {
 		bool isFaceToUp;
 		bool isInvicible;
 		bool isAlive;
+
 	};
 
 	

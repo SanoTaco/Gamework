@@ -11,6 +11,7 @@ namespace game_framework {
 		void SetIsAlive(bool alive);							// 設定是否活著
 		//void SetBulletIsAlive(bool alive);
 		void OnMove(Map* m);											// 移動
+		void ChaseHero(Map* map, CEraser* hero);
 		void OnShow(Map* m);											// 將圖形貼到畫面
 		bool beShot(CBullet *bullet);						    // 是否被射到
 		void SetXY(int nx, int ny);								// 設定敌人左上角的座標		
@@ -20,6 +21,9 @@ namespace game_framework {
 		int  GetY2();					                   // 敌人右下角 y 座標
 		bool GetIs_right();
 		int GetMaxDelay();
+		void ChangeHP(int flag);
+		void SetHP(int initialHP);
+		int GetHP();
 		void pause();
 		bool Halt();
 		void SetHalt(bool flag);
@@ -34,6 +38,7 @@ namespace game_framework {
 		bool is_alive;				// 是否活著
 		int x, y;					// 敌人坐标
 		int x1, y1;                 //记录敌人坐标
+		int hp;
 		bool is_Down;               
 		bool is_right;             
 		
@@ -46,11 +51,23 @@ namespace game_framework {
 	public:
 		
 		EnemyDuck();
-		virtual ~EnemyDuck();
+		 ~EnemyDuck();
 		void LoadBitmap();
 	};
 
+	class EnchancedEnemy : public AbstractEnemy {
+	public:
+		EnchancedEnemy();
+		~EnchancedEnemy();
+		void LoadBitmap();
+		//void ChaseHero(Map* map , CEraser* hero);
+	
+		
 
+
+
+
+	};
 
 
 

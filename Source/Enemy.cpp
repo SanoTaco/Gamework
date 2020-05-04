@@ -20,6 +20,7 @@ game_framework::AbstractEnemy::AbstractEnemy()
 	x1 = 0;
 	y1 = 0;
 	is_halt = false;
+	hp = 2;
 }
 
 game_framework::AbstractEnemy::~AbstractEnemy()
@@ -58,54 +59,48 @@ void game_framework::AbstractEnemy::OnMove(Map * m)
 			case 0:
 				//direction goes up
 				if (m->IsEmpty(x, y - STEP_SIZE) == true) {
-					if (y > 288) {
+					
 						for (int i = 0; i < STEP_SIZE; i++)
 						{
 							y -= 1;
 						}
 						
-					}
+					
 				}
 				SetHalt(true);
 				break;
 			case 1:
 				//direction goes right
 				if (m->IsEmpty(x + enemy_left.Width() + STEP_SIZE, y) == true) {
-					if (x < 512) {
+					
 						for (int i = 0; i < STEP_SIZE; i++) {
 							x += 1;
 						}
 						
-					}
-
-
 				}
 				SetHalt(true);
 				break;
 			case 2:
 				//direction goes down
 				if (m->IsEmpty(x, y + enemy_left.Height() + STEP_SIZE) == true) {
-					if (y < 384) {
+					
 						for (int i = 0; i < STEP_SIZE; i++)
 						{
 							y += 1;
 						}
 						
-					}
-
-
 				}
 				SetHalt(true);
 				break;
 			case 3:
 				//direction goes left
 				if (m->IsEmpty(x - STEP_SIZE, y) == true) {
-					if (x > 384) {
+					
 						for (int i = 0; i < STEP_SIZE; i++) {
 							x -= 1;
 						}
 						
-					}
+					
 
 
 				}
@@ -123,6 +118,46 @@ void game_framework::AbstractEnemy::OnMove(Map * m)
 
 
 
+	}
+}
+
+void game_framework::AbstractEnemy::ChaseHero(Map * map, CEraser * hero)
+{
+	if (!IsAlive()) {
+		return;
+	}
+	
+	if (IsAlive() == true) {
+		//enemy goes left
+		if (hero->GetX1() < this->GetX1()) {
+			if (map->IsEmpty((x - 1), y) == true) {
+				x -= 1;
+			}
+
+		}
+		else
+		{
+			if (map->IsEmpty((x + 1), y) == true) {
+				x += 1;
+			}
+
+
+		}
+
+		// enemy goes up
+		if (hero->GetY1() < this->GetY1()) {
+			if (map->IsEmpty(x, (y - 1)) == true) {
+				y -= 1;
+			}
+
+		}
+		else {
+			if (map->IsEmpty(x, (y + 1)) == true) {
+				y += 1;
+			}
+
+		}
+		
 	}
 }
 
@@ -160,7 +195,7 @@ bool game_framework::AbstractEnemy::beShot(CBullet * bullet)
 
 void game_framework::AbstractEnemy::LoadBitmap()
 {
-	enemy_left.AddBitmap(IDB_DUCK, RGB(255, 255, 255));
+	enemy_left.AddBitmap(IDB_Duck, RGB(255, 255, 255));
 }
 
 bool game_framework::AbstractEnemy::HitRectangle(int tx1, int ty1, int tx2, int ty2)
@@ -209,6 +244,18 @@ int game_framework::AbstractEnemy::GetY2()
 int game_framework::AbstractEnemy::GetMaxDelay()
 {
 	return 150;
+}
+void game_framework::AbstractEnemy::ChangeHP(int flag)
+{
+	hp += flag;
+}
+void game_framework::AbstractEnemy::SetHP(int initialHP)
+{
+	hp = initialHP;
+}
+int game_framework::AbstractEnemy::GetHP()
+{
+	return hp;
 }
 void game_framework::AbstractEnemy::pause()
 {
@@ -260,5 +307,24 @@ game_framework::EnemyDuck::~EnemyDuck()
 
 void game_framework::EnemyDuck::LoadBitmap()
 {
-	enemy_left.AddBitmap(IDB_SMILEFACE);
+	enemy_left.AddBitmap(IDB_Duck,RGB(0,0,0));
 }
+
+game_framework::EnchancedEnemy::EnchancedEnemy()
+{
+	is_alive = true;
+	is_right = true;
+	is_Down = true;
+	x = y = x1 = y1 = 0;
+	SetHP(5);
+}
+
+game_framework::EnchancedEnemy::~EnchancedEnemy()
+{
+}
+
+void game_framework::EnchancedEnemy::LoadBitmap()
+{
+	enemy_left.AddBitmap(IDB_ENCHANCEDMONSTER1, RGB(255, 255, 255));
+}
+

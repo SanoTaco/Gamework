@@ -225,3 +225,72 @@ void game_framework::Star::SetIsAlive(bool flag)
 void game_framework::AbstractItem::OnMove()
 {
 }
+
+game_framework::AttackUp::AttackUp()
+{
+	usage = 3;
+	effect = 1;
+	x = y = 0;
+}
+
+void game_framework::AttackUp::OnShow(Map * map)
+{
+	if (!GetIsAlive()) {
+		return;
+	}
+	else {
+		atk.SetTopLeft(x, y);
+		atk.ShowBitmap();
+	}
+}
+
+void game_framework::AttackUp::SetXY(int nx, int ny)
+{
+	x = nx;
+	y = ny;
+}
+
+void game_framework::AttackUp::LoadBitmap()
+{
+	atk.LoadBitmap(IDB_ATK, RGB(255, 255, 255));
+}
+
+int game_framework::AttackUp::Usage()
+{
+	return usage;
+}
+
+int game_framework::AttackUp::Effect()
+{
+	return effect;
+}
+
+int game_framework::AttackUp::GetX1()
+{
+	return x;
+}
+
+int game_framework::AttackUp::GetY1()
+{
+	return y;
+}
+
+int game_framework::AttackUp::GetX2()
+{
+	return x + atk.Width();
+}
+
+int game_framework::AttackUp::GetY2()
+{
+	return y + atk.Height();
+}
+
+bool game_framework::AttackUp::GetIsAlive()
+{
+	return isalive;
+}
+
+void game_framework::AttackUp::SetIsAlive(bool flag)
+{
+	isalive = flag;
+}

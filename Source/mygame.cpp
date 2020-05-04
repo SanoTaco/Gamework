@@ -197,9 +197,11 @@ CGameStateRun::CGameStateRun(CGame *g)
 	maps.push_back(new Lava_Rock_2());
 	bullet = new CBullet();
 	enemies.push_back(new EnemyDuck());
+	enemies2.push_back(new EnchancedEnemy());
 	items.push_back(new Item());
 	items.push_back(new Potion());
 	items.push_back(new Star());
+	items.push_back(new AttackUp());
 }
 
 CGameStateRun::~CGameStateRun()
@@ -240,17 +242,19 @@ void CGameStateRun::OnBeginState()
 	
 	if (mapLevel == 0) {
 		enemies[0]->SetIsAlive(true);
-		enemies[0]->SetXY(384,384 );
+		enemies[0]->SetXY(384,288 );
 		items[0]->SetIsAlive(true);
 		items[0]->SetXY(70, 50);
 		items[1]->SetIsAlive(true);
 		items[1]->SetXY(70, 150);
 		items[2]->SetIsAlive(true);
 		items[2]->SetXY(70, 100);
+		items[3]->SetIsAlive(true);
+		items[3]->SetXY(70, 250);
 	}
 	else {
-		enemies[0]->SetIsAlive(true);
-		enemies[0]->SetXY(320, 336);
+		enemies2[0]->SetIsAlive(true);
+		enemies2[0]->SetXY(320, 288);
 		
 		//items[1]->SetIsAlive(true);
 		items[1]->SetXY(70, 100);
@@ -398,11 +402,13 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	oneHeart.LoadBitmap(IDB_ONEHEART, RGB(255, 255, 255));
 	twoHeart.LoadBitmap(IDB_TWOHEART, RGB(255, 255, 255));
 	threeHeart.LoadBitmap(IDB_THREEHEART, RGB(255, 255, 255));
-	
+	atk.LoadBitmap(IDB_ATK, RGB(255, 255, 255));
+
 	eraser.LoadBitmap();
 	bullet->LoadBitmap();
 	enemies[0]->LoadBitmap();
-	
+	enemies2[0]->LoadBitmap();
+	enemies2[0]->SetXY(520, 48);
 }
 
 
@@ -477,6 +483,10 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 					//points
 					points.Add( (*item_iter)->Effect());
 				}
+				if ((*item_iter)->Usage() == 3) {
+					hero->SetATK(3);
+					heroGetsATK = true;
+				}
 				(*item_iter)->SetIsAlive(false);
 			}
 			
@@ -487,10 +497,15 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 
 		for (iter = enemies.begin(); iter != enemies.end(); iter++) {
 			if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
-				(*iter)->SetIsAlive(false);//敌人死了
+				(*iter)->ChangeHP(-(hero->GetATK()));				
 				bullet->SetIsAlive(false);//子弹死了
-				points.Add(1);
+				if ((*iter)->GetHP() <= 0) {
+					(*iter)->SetIsAlive(false);//敌人死了
+					points.Add(1);
+				}
+				
 			}
+			
 			if (hero->IsAlive() && (*iter)->touchHero(hero)) {
 				hero->SetIsInvincible(true);
 				hero->addHP(-1);
@@ -519,20 +534,11 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	else {
 		maps[mapLevel]->OnMove();
 		eraser.OnMove(maps[mapLevel]); //hero in the second map
-		enemies[0]->SetXY(320, 336);
 		
-
-		if (enemies[0]->Halt()) {
-			delayCounter++;
-			if (delayCounter > 30 && delayCounter < 60) {
-				enemies[0]->SetHalt(false);
-				delayCounter = 0;
-			}
-		}
-		else
-		{
-			enemies[0]->OnMove(maps[mapLevel]);
-		}
+		
+		enemies2[0]->ChaseHero(maps[1], hero);
+		
+		
 
 		bullet->OnMove(hero);
 		for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
@@ -562,11 +568,14 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 			}
 
 		}
-		for (iter = enemies.begin(); iter != enemies.end(); iter++) {
+		for (iter = enemies2.begin(); iter != enemies2.end(); iter++) {
 			if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
-				(*iter)->SetIsAlive(false);//敌人死了
+				(*iter)->ChangeHP(-(hero->GetATK()));
 				bullet->SetIsAlive(false);//子弹死了
-				points.Add(1);
+				if ((*iter)->GetHP() <= 0) {
+					(*iter)->SetIsAlive(false);//敌人死了
+					points.Add(1);
+				}
 			}
 			if (hero->IsAlive() && (*iter)->touchHero(hero)) {
 				hero->SetIsInvincible(true);
@@ -629,13 +638,15 @@ void CGameStateRun::OnShow()
 		items[0]->OnShow(maps[0]);
 		items[1]->OnShow(maps[0]);
 		items[2]->OnShow(maps[0]);
+		items[3]->OnShow(maps[mapLevel]);
 		break;
 	case 1:
 		
 		maps[mapLevel]->OnShow();
 		eraser.OnShow(maps[1]);
-		bullet->OnShow(maps[mapLevel]);
-		enemies[0]->OnShow(maps[1]);
+		bullet->OnShow(maps[1]);
+		
+		enemies2[0]->OnShow(maps[1]);
 		items[1]->SetIsAlive(true);
 		items[1]->OnShow(maps[1]);
 		break;
@@ -643,18 +654,21 @@ void CGameStateRun::OnShow()
 		break;
 	}
 	if (hits_left.GetInteger() == 3) {
-		threeHeart.SetTopLeft(0, 0);
+		threeHeart.SetTopLeft(0, 450);
 		threeHeart.ShowBitmap();
 	}
 	if (hits_left.GetInteger() == 2) {
-		twoHeart.SetTopLeft(0, 0);
+		twoHeart.SetTopLeft(0, 450);
 		twoHeart.ShowBitmap();
 	}
 	if (hits_left.GetInteger() == 1) {
-		oneHeart.SetTopLeft(0, 0);
+		oneHeart.SetTopLeft(0, 450);
 		oneHeart.ShowBitmap();
 	}
-
+	if (heroGetsATK == true) {
+		atk.SetTopLeft(200, 450);
+		atk.ShowBitmap();
+	}
 	points.ShowBitmap();
 	
 }

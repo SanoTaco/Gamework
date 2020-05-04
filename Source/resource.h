@@ -47,15 +47,18 @@
 #define IDB_BULLET_1                    169
 #define IDB_EXPLOSION                   170
 #define IDB_BULLET_0                    171
-#define IDB_DUCK                        172
 #define IDB_INVICIBLE                   175
 #define IDB_ONEHEART                    176
 #define IDB_TWOHEART                    177
 #define IDB_THREEHEART                  178
 #define IDB_STAR                        179
 #define IDB_APPLE                       180
-#define IDB_BITMAP5                     181
 #define IDB_POINT                       181
+#define IDB_Duck                        183
+#define IDB_ENCHANCEDMONSTER1           184
+#define IDB_BLACKGROUND                 186
+#define IDB_BITMAP3                     187
+#define IDB_ATK                         187
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -68,7 +71,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        183
+#define _APS_NEXT_RESOURCE_VALUE        188
 #define _APS_NEXT_COMMAND_VALUE         32776
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           101

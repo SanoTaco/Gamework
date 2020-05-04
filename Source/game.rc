@@ -48,8 +48,6 @@ IDB_EXPLOSION           BITMAP                  "..\\res\\EXPLOSION.bmp"
 
 IDB_BULLET_0            BITMAP                  "..\\res\\bullet_0.bmp"
 
-IDB_DUCK                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\duck.bmp"
-
 IDB_INVICIBLE           BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\InvicibleHero.bmp"
 
 IDB_ONEHEART            BITMAP                  "..\\res\\bmp00001.bmp"
@@ -63,6 +61,14 @@ IDB_STAR                BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 IDB_APPLE               BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\apple.bmp"
 
 IDB_POINT               BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\points.bmp"
+
+IDB_Duck                BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\duck.bmp"
+
+IDB_ENCHANCEDMONSTER1   BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\enchanted_monsster_1.bmp"
+
+IDB_BLACKGROUND         BITMAP                  "..\\res\\bmp00003.bmp"
+
+IDB_ATK                 BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\ATK.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

@@ -19,7 +19,7 @@ game_framework::Lava_Rock_1::Lava_Rock_1():X(0), Y(0), MW(64), MH(48)
 							 {1,0,0,0,0,0,0,0,0,0} ,	//row 7
 							 {1,0,0,0,0,0,0,0,0,0} ,	//row 8
 							 {1,1,1,1,1,1,1,1,1,1} ,	//row 9
-							 {0,0,0,0,0,0,0,0,0,0} };	//row 10
+							 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1} };	//row 10
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -38,14 +38,19 @@ void game_framework::Lava_Rock_1::LoadBitmap()
 {
 	lava.LoadBitmap(IDB_LAVA_1);
 	rock.LoadBitmap(IDB_ROCK);
+	blackground.LoadBitmapA(IDB_BLACKGROUND);
 }
 
 void game_framework::Lava_Rock_1::OnShow()
 {
+
+
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			switch (lavaMap[i][j]) {
 			case -1:
+				blackground.SetTopLeft(X + MW * i, Y + MH * j);
+				blackground.ShowBitmap();
 				break;
 			case 0:
 				rock.SetTopLeft(X + MW * i, Y + MH * j);

@@ -160,13 +160,16 @@ namespace game_framework {
 		int				invicibleCounter = 0;
 		int				delayCounter = 0;
 		int				point = 0;
+		bool			heroGetsATK= false;
 		CBullet			*bullet;
 		vector<Map *> maps;
 		vector<AbstractEnemy*> enemies;
+		vector<AbstractEnemy*> enemies2;
 		vector<AbstractItem*>	items;
 		CMovingBitmap	oneHeart;
 		CMovingBitmap	twoHeart;
 		CMovingBitmap	threeHeart;
+		CMovingBitmap	atk;
 		//Hero			hero;
 		//Character		*character;
 

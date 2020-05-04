@@ -338,9 +338,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bitmaps\apple.bmp" />
+    <Image Include="Bitmaps\ATK.bmp" />
     <Image Include="Bitmaps\CH.bmp" />
     <Image Include="Bitmaps\character.bmp" />
     <Image Include="Bitmaps\duck.bmp" />
+    <Image Include="Bitmaps\enchanted_monsster_1.bmp" />
     <Image Include="Bitmaps\InvicibleHero.bmp" />
     <Image Include="Bitmaps\lava_1.bmp" />
     <Image Include="Bitmaps\points.bmp" />
@@ -351,6 +353,7 @@
     <Image Include="res\blue.bmp" />
     <Image Include="res\bmp00001.bmp" />
     <Image Include="res\bmp00002.bmp" />
+    <Image Include="res\bmp00003.bmp" />
     <Image Include="res\borader.bmp" />
     <Image Include="res\bullet_0.bmp" />
     <Image Include="res\BULLET_1.bmp" />

@@ -19,7 +19,7 @@ namespace game_framework {
 		const int X, Y;
 		const int MW, MH;
 		int lavaMap[10][10];
-		CMovingBitmap lava, rock;
+		CMovingBitmap lava, rock,blackground;
 	};
 
 
