@@ -21,6 +21,7 @@ game_framework::AbstractEnemy::AbstractEnemy()
 	y1 = 0;
 	is_halt = false;
 	hp = 2;
+	atk = 1;
 }
 
 game_framework::AbstractEnemy::~AbstractEnemy()
@@ -195,7 +196,7 @@ bool game_framework::AbstractEnemy::beShot(CBullet * bullet)
 
 void game_framework::AbstractEnemy::LoadBitmap()
 {
-	enemy_left.AddBitmap(IDB_Duck, RGB(255, 255, 255));
+	enemy_left.AddBitmap(IDB_Duck, RGB(0, 0, 0));
 }
 
 bool game_framework::AbstractEnemy::HitRectangle(int tx1, int ty1, int tx2, int ty2)
@@ -253,6 +254,14 @@ void game_framework::AbstractEnemy::SetHP(int initialHP)
 {
 	hp = initialHP;
 }
+int game_framework::AbstractEnemy::GetATK()
+{
+	return atk;
+}
+void game_framework::AbstractEnemy::SetATK(int flag)
+{
+	atk = flag;
+}
 int game_framework::AbstractEnemy::GetHP()
 {
 	return hp;
@@ -299,6 +308,7 @@ game_framework::EnemyDuck::EnemyDuck()
 	is_right = true;
 	is_Down = true;
 	x = y = x1 = y1 = 0;
+	atk = 1;
 }
 
 game_framework::EnemyDuck::~EnemyDuck()
@@ -317,6 +327,7 @@ game_framework::EnchancedEnemy::EnchancedEnemy()
 	is_Down = true;
 	x = y = x1 = y1 = 0;
 	SetHP(5);
+	atk = 2;
 }
 
 game_framework::EnchancedEnemy::~EnchancedEnemy()

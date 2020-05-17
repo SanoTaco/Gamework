@@ -34,11 +34,18 @@ namespace game_framework {
 		void SetIsInvincible(bool flag);
 		void addHP(int num);
 		int GetHP();
+		int GetPoint();
+		void addPoint(int number);
+		void InvicibleCountDown();
 		bool GetIsInvincible();
 		bool IsMovingUp() { return isMovingUp; };
 		bool GetItem(AbstractItem* item);
 		int GetATK();
+		bool IsATKUp();
+		void SetIsATKUp(bool flag);
 		void SetATK(int num);
+		bool IsGetShiedl();
+		void SetShield(bool flag);
 		
 	protected:
 		CAnimation animation;		// 擦子的動畫	
@@ -55,6 +62,10 @@ namespace game_framework {
 		bool isFaceToUp;
 		bool isInvicible;
 		bool isAlive;
+		bool getATK;
+		bool getShield;
+		int point;
+		int invicibleCounter;
 
 	};
 

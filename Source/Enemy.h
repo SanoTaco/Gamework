@@ -2,6 +2,7 @@
 
 namespace game_framework {
 	class Map;
+	class CBullet;
 	class AbstractEnemy {
 
 	public:
@@ -23,6 +24,8 @@ namespace game_framework {
 		int GetMaxDelay();
 		void ChangeHP(int flag);
 		void SetHP(int initialHP);
+		int GetATK();
+		void SetATK(int flag);
 		int GetHP();
 		void pause();
 		bool Halt();
@@ -39,6 +42,7 @@ namespace game_framework {
 		int x, y;					// 敌人坐标
 		int x1, y1;                 //记录敌人坐标
 		int hp;
+		int atk;
 		bool is_Down;               
 		bool is_right;             
 		

@@ -43,10 +43,12 @@ namespace game_framework {
 	{
 		const int X_POS = 128;
 		const int Y_POS = 300;
+		point = 0;
 		atk = 1;
 		isAlive = true;
 		isInvicible = false;
 		hp = 3;
+		invicibleCounter = 0;
 		x = X_POS;
 		y = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
@@ -175,6 +177,26 @@ namespace game_framework {
 		return hp;
 	}
 
+	int CEraser::GetPoint()
+	{
+		return point;
+	}
+
+	void CEraser::addPoint(int number)
+	{
+		point += number;
+	}
+
+	void CEraser::InvicibleCountDown()
+	{
+		invicibleCounter++;
+		if (invicibleCounter >= 60 && invicibleCounter <= 70)
+		{
+			SetIsInvincible(false);
+			invicibleCounter = 0;
+		}
+	}
+
 	bool CEraser::GetIsInvincible()
 	{
 		return isInvicible;
@@ -195,9 +217,29 @@ namespace game_framework {
 		return atk;
 	}
 
+	bool CEraser::IsATKUp()
+	{
+		return getATK;
+	}
+
+	void CEraser::SetIsATKUp(bool flag)
+	{
+		getATK = flag;
+	}
+
 	void CEraser::SetATK(int num)
 	{
 		atk = num;
+	}
+
+	bool CEraser::IsGetShiedl()
+	{
+		return getShield;
+	}
+
+	void CEraser::SetShield(bool flag)
+	{
+		getShield = flag;
 	}
 
 	bool CEraser::HitRectangle(int tx1, int ty1, int tx2, int ty2)

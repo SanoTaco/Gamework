@@ -294,3 +294,72 @@ void game_framework::AttackUp::SetIsAlive(bool flag)
 {
 	isalive = flag;
 }
+
+game_framework::Shield::Shield()
+{
+	usage = 4;
+	effect = 1;
+	x = y = 0;
+}
+
+void game_framework::Shield::OnShow(Map * map)
+{
+	if (!GetIsAlive()) {
+		return;
+	}
+	else {
+		shield.SetTopLeft(x, y);
+		shield.ShowBitmap();
+	}
+}
+
+void game_framework::Shield::SetXY(int nx, int ny)
+{
+	x = nx;
+	y = ny;
+}
+
+void game_framework::Shield::LoadBitmap()
+{
+	shield.LoadBitmap(IDB_SHIELD, RGB(255, 255, 255));
+}
+
+int game_framework::Shield::Usage()
+{
+	return usage;
+}
+
+int game_framework::Shield::Effect()
+{
+	return effect;
+}
+
+int game_framework::Shield::GetX1()
+{
+	return x;
+}
+
+int game_framework::Shield::GetY1()
+{
+	return y;
+}
+
+int game_framework::Shield::GetX2()
+{
+	return x + shield.Width();
+}
+
+int game_framework::Shield::GetY2()
+{
+	return y + shield.Height();
+}
+
+bool game_framework::Shield::GetIsAlive()
+{
+	return isalive;
+}
+
+void game_framework::Shield::SetIsAlive(bool flag)
+{
+	isalive = flag;
+}

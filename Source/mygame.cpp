@@ -196,12 +196,12 @@ CGameStateRun::CGameStateRun(CGame *g)
 	maps.push_back(new Lava_Rock_1());
 	maps.push_back(new Lava_Rock_2());
 	bullet = new CBullet();
-	enemies.push_back(new EnemyDuck());
-	enemies2.push_back(new EnchancedEnemy());
-	items.push_back(new Item());
-	items.push_back(new Potion());
-	items.push_back(new Star());
-	items.push_back(new AttackUp());
+	//enemies.push_back(new EnemyDuck());
+	//enemies2.push_back(new EnchancedEnemy());
+	//items.push_back(new Item());
+	//items.push_back(new Potion());
+	//items.push_back(new Star());
+	//items.push_back(new AttackUp());
 }
 
 CGameStateRun::~CGameStateRun()
@@ -237,28 +237,14 @@ void CGameStateRun::OnBeginState()
 	CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
-
+	vector<Map*>::iterator mapit;
 
 	
-	if (mapLevel == 0) {
-		enemies[0]->SetIsAlive(true);
-		enemies[0]->SetXY(384,288 );
-		items[0]->SetIsAlive(true);
-		items[0]->SetXY(70, 50);
-		items[1]->SetIsAlive(true);
-		items[1]->SetXY(70, 150);
-		items[2]->SetIsAlive(true);
-		items[2]->SetXY(70, 100);
-		items[3]->SetIsAlive(true);
-		items[3]->SetXY(70, 250);
+	for (mapit = maps.begin(); mapit != maps.end();mapit++) {
+		(*mapit)->initialize();
 	}
-	else {
-		enemies2[0]->SetIsAlive(true);
-		enemies2[0]->SetXY(320, 288);
 		
-		//items[1]->SetIsAlive(true);
-		items[1]->SetXY(70, 100);
-	}
+	
 	
 	
 	
@@ -357,8 +343,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 {
-	//maps[0]->LoadBitmap();
-	//maps[1]->LoadBitmap();
+	
 	vector<Map*>::const_iterator mapit;
 	vector<AbstractItem*>::const_iterator it;
 	for (it = items.begin(); it != items.end(); it++) {
@@ -403,12 +388,12 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	twoHeart.LoadBitmap(IDB_TWOHEART, RGB(255, 255, 255));
 	threeHeart.LoadBitmap(IDB_THREEHEART, RGB(255, 255, 255));
 	atk.LoadBitmap(IDB_ATK, RGB(255, 255, 255));
-
+	shield.LoadBitmap(IDB_SHIELD, RGB(255, 255, 255));
 	eraser.LoadBitmap();
 	bullet->LoadBitmap();
-	enemies[0]->LoadBitmap();
-	enemies2[0]->LoadBitmap();
-	enemies2[0]->SetXY(520, 48);
+	//enemies[0]->LoadBitmap();
+	//enemies2[0]->LoadBitmap();
+	//enemies2[0]->SetXY(520, 48);
 }
 
 
@@ -431,7 +416,17 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	vector<AbstractItem *>::const_iterator item_iter;
 	CEraser* hero = &eraser;
 	if (mapLevel == 0) {
+		
 		maps[mapLevel]->OnMove();
+		if (hero->IsAlive()) {
+			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
+
+
+		}
+		else {
+			GotoGameState(GAME_STATE_OVER);
+		}
+		/*
 		eraser.OnMove(maps[mapLevel]);
 		 //hero in the first map
 		
@@ -529,13 +524,23 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 			
 		}
 		
+		
+		*/
+		
 
 	}
 	else {
+
 		maps[mapLevel]->OnMove();
-		eraser.OnMove(maps[mapLevel]); //hero in the second map
-		
-		
+		//eraser.OnMove(maps[mapLevel]); //hero in the second map
+		if (hero->IsAlive()) {
+			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
+
+		}
+		else {
+			GotoGameState(GAME_STATE_OVER);
+		}
+		/*
 		enemies2[0]->ChaseHero(maps[1], hero);
 		
 		
@@ -599,6 +604,9 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 
 
 		}
+		
+		*/
+		
 
 	}
 	
@@ -631,44 +639,49 @@ void CGameStateRun::OnShow()
 	
 	switch (mapLevel) {
 	case 0 :
-		maps[mapLevel]->OnShow();
-		eraser.OnShow(maps[0]);
+		maps[mapLevel]->OnShow(maps[mapLevel]);
+		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
-		enemies[0]->OnShow(maps[0]);
-		items[0]->OnShow(maps[0]);
-		items[1]->OnShow(maps[0]);
-		items[2]->OnShow(maps[0]);
-		items[3]->OnShow(maps[mapLevel]);
+		//enemies[0]->OnShow(maps[0]);
+		//items[0]->OnShow(maps[0]);
+		//items[1]->OnShow(maps[0]);
+		//items[2]->OnShow(maps[0]);
+		//items[3]->OnShow(maps[mapLevel]);
 		break;
 	case 1:
 		
-		maps[mapLevel]->OnShow();
-		eraser.OnShow(maps[1]);
-		bullet->OnShow(maps[1]);
+		maps[mapLevel]->OnShow(maps[mapLevel]);
+		eraser.OnShow(maps[mapLevel]);
+		bullet->OnShow(maps[mapLevel]);
 		
-		enemies2[0]->OnShow(maps[1]);
-		items[1]->SetIsAlive(true);
-		items[1]->OnShow(maps[1]);
+		//enemies2[0]->OnShow(maps[1]);
+		//items[1]->SetIsAlive(true);
+		//items[1]->OnShow(maps[1]);
 		break;
 	default:
 		break;
 	}
-	if (hits_left.GetInteger() == 3) {
+	if (hero->GetHP() == 3) {
 		threeHeart.SetTopLeft(0, 450);
 		threeHeart.ShowBitmap();
 	}
-	if (hits_left.GetInteger() == 2) {
+	if (hero->GetHP() == 2) {
 		twoHeart.SetTopLeft(0, 450);
 		twoHeart.ShowBitmap();
 	}
-	if (hits_left.GetInteger() == 1) {
+	if (hero->GetHP() == 1) {
 		oneHeart.SetTopLeft(0, 450);
 		oneHeart.ShowBitmap();
 	}
-	if (heroGetsATK == true) {
-		atk.SetTopLeft(200, 450);
+	if (hero->IsATKUp() == true) {
+		atk.SetTopLeft(200, 430);
 		atk.ShowBitmap();
 	}
+	if (hero->IsGetShiedl() == true) {
+		shield.SetTopLeft(250, 430);
+		shield.ShowBitmap();
+	}
+	points.SetInteger(hero->GetPoint());
 	points.ShowBitmap();
 	
 }

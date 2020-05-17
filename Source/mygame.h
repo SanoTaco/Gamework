@@ -170,6 +170,7 @@ namespace game_framework {
 		CMovingBitmap	twoHeart;
 		CMovingBitmap	threeHeart;
 		CMovingBitmap	atk;
+		CMovingBitmap	shield;
 		//Hero			hero;
 		//Character		*character;
 

@@ -347,6 +347,7 @@
     <Image Include="Bitmaps\lava_1.bmp" />
     <Image Include="Bitmaps\points.bmp" />
     <Image Include="Bitmaps\rock.bmp" />
+    <Image Include="Bitmaps\shield.bmp" />
     <Image Include="Bitmaps\stars.bmp" />
     <Image Include="res\bitmap3.bmp" />
     <Image Include="res\bitmap4.bmp" />

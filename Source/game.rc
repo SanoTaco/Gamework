@@ -70,6 +70,8 @@ IDB_BLACKGROUND         BITMAP                  "..\\res\\bmp00003.bmp"
 
 IDB_ATK                 BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\ATK.bmp"
 
+IDB_SHIELD              BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\shield.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
