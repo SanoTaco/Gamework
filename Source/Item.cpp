@@ -27,7 +27,7 @@ void game_framework::Item::OnShow(Map* map)
 	
 	
 	if (GetIsAlive()) {
-		point.SetTopLeft(x,y);
+		point.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 		point.ShowBitmap();
 	}
 	else {
@@ -100,7 +100,7 @@ void game_framework::Potion::OnShow(Map * map)
 		return;
 	}
 	else {
-		potion.SetTopLeft(x, y);
+		potion.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 		potion.ShowBitmap();
 	}
 }
@@ -166,7 +166,7 @@ void game_framework::Star::OnShow(Map * map)
 		return;
 	}
 	else {
-		star.SetTopLeft(x, y);
+		star.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 		star.ShowBitmap();
 	}
 }
@@ -239,7 +239,7 @@ void game_framework::AttackUp::OnShow(Map * map)
 		return;
 	}
 	else {
-		atk.SetTopLeft(x, y);
+		atk.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 		atk.ShowBitmap();
 	}
 }
@@ -308,7 +308,7 @@ void game_framework::Shield::OnShow(Map * map)
 		return;
 	}
 	else {
-		shield.SetTopLeft(x, y);
+		shield.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 		shield.ShowBitmap();
 	}
 }

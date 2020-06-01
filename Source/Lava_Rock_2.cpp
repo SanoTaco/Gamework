@@ -14,8 +14,8 @@ game_framework::Lava_Rock_2::Lava_Rock_2() :X(0), Y(0), MW(64), MH(48)
 									 {1,0,1,0,0,0,0,1,0,1} ,	//row 4
 									 {1,0,0,0,0,0,0,0,0,1} ,	//row 5
 									 {1,0,0,0,0,0,0,0,0,1} ,	//row 6
-									 {0,0,1,0,0,0,0,1,0,1} ,	//row 7
-									 {0,0,1,1,0,0,1,1,0,1} ,	//row 8
+									 {0,0,1,0,0,0,0,1,0,0} ,	//row 7
+									 {0,0,1,1,0,0,1,1,0,0} ,	//row 8
 									 {1,1,1,1,1,1,1,1,1,1} ,	//row 9
 									 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1} };	//row 10
 
@@ -61,7 +61,12 @@ void game_framework::Lava_Rock_2::OnShow(Map* map)
 	for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
 		(*item_iter)->OnShow(map);
 	}
-
+	for (item_iter = itemlist.begin(); item_iter != itemlist.end(); item_iter++) {
+		if ((*item_iter)->GetIsAlive()) {
+			(*item_iter)->OnShow(map);
+		}
+		
+	}
 
 }
 
@@ -79,20 +84,20 @@ bool game_framework::Lava_Rock_2::IsEmpty(int x, int y)
 	return lavaMap[gx][gy] == 0; // 假設 0 代表空的
 }
 
-void game_framework::Lava_Rock_2::interact(Map * maps, int &mapLevel, CEraser * hero, CBullet * bullet)
+void game_framework::Lava_Rock_2::interact(Map * map, int &mapLevel, CEraser * hero, CBullet * bullet)
 {
-	hero->OnMove(maps);
+	hero->OnMove(map);
 	//hero in the  map
 
 
 
 	
-	enemies[0]->ChaseHero(maps, hero);
+	enemies[0]->ChaseHero(map, hero);
 
 
 	bullet->OnMove(hero);
 
-	if (maps->IsEnterTheDoor(hero)) {
+	if (map->IsEnterTheDoor(hero)) {
 		mapLevel++;
 		hero->SetXY(hero->GetX1() - 300, hero->GetY1());
 	}
@@ -138,6 +143,45 @@ void game_framework::Lava_Rock_2::interact(Map * maps, int &mapLevel, CEraser * 
 
 	}
 
+	// get droped items
+	for (item_iter = itemlist.begin(); item_iter != itemlist.end(); item_iter++) {
+		if (hero->IsAlive() && hero->GetItem(*item_iter) && (*item_iter)->GetIsAlive()) {
+			if ((*item_iter)->Usage() == 1) {
+				// its a potion
+				if (hero->GetHP() < 3) {
+
+					hero->addHP((*item_iter)->Effect());
+				}
+
+			}
+			if ((*item_iter)->Usage() == 2) {
+				//it can enchance hero
+				hero->SetIsInvincible(true);
+				invicibleCounter++;
+				if (invicibleCounter >= 60 && invicibleCounter <= 70)
+				{
+					hero->SetIsInvincible(false);
+					invicibleCounter = 0;
+				}
+			}
+			if ((*item_iter)->Usage() == 0) {
+				//points
+
+				hero->addPoint((*item_iter)->Effect());
+			}
+			// ATK Up
+			if ((*item_iter)->Usage() == 3) {
+				hero->SetATK(3);
+
+				hero->SetIsATKUp(true);
+			}
+			if ((*item_iter)->Usage() == 4) {
+				hero->SetShield(true);
+			}
+			(*item_iter)->SetIsAlive(false);
+		}
+
+	}
 
 
 
@@ -149,6 +193,7 @@ void game_framework::Lava_Rock_2::interact(Map * maps, int &mapLevel, CEraser * 
 				(*iter)->SetIsAlive(false);//敌人死了
 				//points.Add(1);
 				hero->addPoint(1);
+				map->dropItem((*iter), itemlist);
 			}
 
 		}
@@ -179,11 +224,43 @@ void game_framework::Lava_Rock_2::interact(Map * maps, int &mapLevel, CEraser * 
 	}
 }
 
+void game_framework::Lava_Rock_2::dropItem(AbstractEnemy * enemy, vector<AbstractItem*> itemlist)
+{
+	int randNumber = (rand() % 9);
+	if (randNumber <= 7 && randNumber >= 4) {
+		itemlist[0]->SetXY(enemy->GetX1(), enemy->GetY1());
+		itemlist[0]->SetIsAlive(true);
+
+	}
+	/*
+	if (randNumber == 0) {
+		// No Item droped , bad luck~
+	}*/
+	if (randNumber > 0 && randNumber < 4) {
+		itemlist[1]->SetXY(enemy->GetX1(), enemy->GetY1());
+		itemlist[1]->SetIsAlive(true);
+
+	}
+	if (randNumber > 7 && randNumber <= 9) {
+		itemlist[2]->SetXY(enemy->GetX1(), enemy->GetY1());
+		itemlist[2]->SetIsAlive(true);
+
+	}
+}
+
 void game_framework::Lava_Rock_2::initialize()
 {
 	enemies.push_back(new EnchancedEnemy());
 	items.push_back(new Potion());
 	items.push_back(new Shield());
+
+
+	itemlist.push_back(new Item());
+	itemlist.push_back(new Potion());
+	itemlist.push_back(new Shield());
+
+
+
 	for (iter = enemies.begin(); iter != enemies.end(); iter++) {
 		(*iter)->LoadBitmap();
 		(*iter)->SetXY(384, 288);
@@ -193,6 +270,10 @@ void game_framework::Lava_Rock_2::initialize()
 
 		GetRandomItem(*item_iter);
 
+	}
+	for (item_iter = itemlist.begin(); item_iter != itemlist.end(); item_iter++) {
+		(*item_iter)->LoadBitmap();
+		(*item_iter)->SetIsAlive(false);
 	}
 }
 
@@ -204,6 +285,24 @@ int game_framework::Lava_Rock_2::ScreenX(int & x)
 int game_framework::Lava_Rock_2::ScreenY(int & y)
 {
 	return y;
+}
+
+int game_framework::Lava_Rock_2::GetX1()
+{
+	return X;
+}
+
+int game_framework::Lava_Rock_2::GetY1()
+{
+	return Y;
+}
+
+void game_framework::Lava_Rock_2::SetX1Y1ToLeft(int x)
+{
+}
+
+void game_framework::Lava_Rock_2::SetX1Y1ToRight(int x)
+{
 }
 
 void game_framework::Lava_Rock_2::GetRandomItem(AbstractItem * item)
@@ -218,4 +317,9 @@ void game_framework::Lava_Rock_2::GetRandomItem(AbstractItem * item)
 	else {
 		GetRandomItem(*item_iter);
 	}
+}
+
+bool game_framework::Lava_Rock_2::isScrol()
+{
+	return false;
 }

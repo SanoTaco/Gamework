@@ -195,6 +195,7 @@ CGameStateRun::CGameStateRun(CGame *g)
 	
 	maps.push_back(new Lava_Rock_1());
 	maps.push_back(new Lava_Rock_2());
+	maps.push_back(new ScrollMap());
 	bullet = new CBullet();
 	//enemies.push_back(new EnemyDuck());
 	//enemies2.push_back(new EnchancedEnemy());
@@ -415,122 +416,17 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	vector<AbstractEnemy*> ::const_iterator iter;
 	vector<AbstractItem *>::const_iterator item_iter;
 	CEraser* hero = &eraser;
-	if (mapLevel == 0) {
-		
+	switch (mapLevel) {
+	case 0:
 		maps[mapLevel]->OnMove();
 		if (hero->IsAlive()) {
 			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
-
-
 		}
 		else {
 			GotoGameState(GAME_STATE_OVER);
 		}
-		/*
-		eraser.OnMove(maps[mapLevel]);
-		 //hero in the first map
-		
-		
-		
-		if (enemies[0]->Halt()) {
-			delayCounter++;
-			if (delayCounter > 30 && delayCounter<60) {
-				enemies[0]->SetHalt(false);
-				delayCounter = 0;
-			}
-		}
-		else
-		{
-			enemies[0]->OnMove(maps[mapLevel]);
-		}
-		
-
-		
-		bullet->OnMove(hero);
-		
-		if (maps[mapLevel]->IsEnterTheDoor(hero)) {
-			mapLevel++;
-			hero->SetXY(hero->GetX1()-300, hero->GetY1());
-		}
-		
-
-		
-		for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
-			if (hero->IsAlive() && hero->GetItem(*item_iter) && (*item_iter)->GetIsAlive()) {
-				if ((*item_iter)->Usage() == 1) {
-					// its a potion
-					if (hits_left.GetInteger() < 3) {
-						hits_left.Add((*item_iter)->Effect());
-					}
-
-				}
-				if ((*item_iter)->Usage() == 2) {
-					//it can enchance hero
-					hero->SetIsInvincible(true);
-					invicibleCounter++;
-					if (invicibleCounter >= 60 && invicibleCounter <= 70)
-					{
-						hero->SetIsInvincible(false);
-						invicibleCounter = 0;
-					}
-				}
-				if ((*item_iter)->Usage() == 0) {
-					//points
-					points.Add( (*item_iter)->Effect());
-				}
-				if ((*item_iter)->Usage() == 3) {
-					hero->SetATK(3);
-					heroGetsATK = true;
-				}
-				(*item_iter)->SetIsAlive(false);
-			}
-			
-		}
-		
-		
-
-
-		for (iter = enemies.begin(); iter != enemies.end(); iter++) {
-			if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
-				(*iter)->ChangeHP(-(hero->GetATK()));				
-				bullet->SetIsAlive(false);//子弹死了
-				if ((*iter)->GetHP() <= 0) {
-					(*iter)->SetIsAlive(false);//敌人死了
-					points.Add(1);
-				}
-				
-			}
-			
-			if (hero->IsAlive() && (*iter)->touchHero(hero)) {
-				hero->SetIsInvincible(true);
-				hero->addHP(-1);
-				hits_left.Add(-1);
-
-				if (hits_left.GetInteger() <= 0) {
-					hero->SetIsAlive(false);
-					GotoGameState(GAME_STATE_OVER);
-				}
-			}
-			if (hero->GetIsInvincible())                                      //主角无敌的时间
-			{
-				invicibleCounter++;
-				if (invicibleCounter >= 60 && invicibleCounter <= 70)
-				{
-					hero->SetIsInvincible(false);
-					invicibleCounter = 0;
-				}
-			}
-			
-			
-		}
-		
-		
-		*/
-		
-
-	}
-	else {
-
+		break;
+	case 1:
 		maps[mapLevel]->OnMove();
 		//eraser.OnMove(maps[mapLevel]); //hero in the second map
 		if (hero->IsAlive()) {
@@ -540,75 +436,20 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 		else {
 			GotoGameState(GAME_STATE_OVER);
 		}
-		/*
-		enemies2[0]->ChaseHero(maps[1], hero);
-		
-		
-
-		bullet->OnMove(hero);
-		for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
-			if (hero->IsAlive() && hero->GetItem(*item_iter) && (*item_iter)->GetIsAlive()) {
-				if ((*item_iter)->Usage() == 1) {
-					// its a potion
-					if (hits_left.GetInteger() < 3) {
-						hits_left.Add((*item_iter)->Effect());
-					}
-
-				}
-				if ((*item_iter)->Usage() == 2) {
-					//it can enchance hero
-					hero->SetIsInvincible(true);
-					invicibleCounter++;
-					if (invicibleCounter >= 60 && invicibleCounter <= 70)
-					{
-						hero->SetIsInvincible(false);
-						invicibleCounter = 0;
-					}
-				}
-				if ((*item_iter)->Usage() == 0) {
-					//points
-					points.Add((*item_iter)->Effect());
-				}
-				(*item_iter)->SetIsAlive(false);
-			}
+		break;
+	case 2:
+		if (hero->IsAlive()) {
+			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
 
 		}
-		for (iter = enemies2.begin(); iter != enemies2.end(); iter++) {
-			if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
-				(*iter)->ChangeHP(-(hero->GetATK()));
-				bullet->SetIsAlive(false);//子弹死了
-				if ((*iter)->GetHP() <= 0) {
-					(*iter)->SetIsAlive(false);//敌人死了
-					points.Add(1);
-				}
-			}
-			if (hero->IsAlive() && (*iter)->touchHero(hero)) {
-				hero->SetIsInvincible(true);
-				hero->addHP(-1);
-				hits_left.Add(-1);
-
-				if (hits_left.GetInteger() <= 0) {
-					hero->SetIsAlive(false);
-					GotoGameState(GAME_STATE_OVER);
-				}
-			}
-			if (hero->GetIsInvincible())                                      //主角无敌的时间
-			{
-				invicibleCounter++;
-				if (invicibleCounter >= 60 && invicibleCounter <= 70)
-				{
-					hero->SetIsInvincible(false);
-					invicibleCounter = 0;
-				}
-			}
-
-
+		else {
+			GotoGameState(GAME_STATE_OVER);
 		}
-		
-		*/
-		
-
+		break;
+	default:
+		break;
 	}
+	
 	
 	
 	
@@ -626,9 +467,9 @@ void CGameStateRun::OnShow()
 	//
 	//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 	//
-	background.ShowBitmap();			// 貼上背景圖
-	help.ShowBitmap();					// 貼上說明圖
-	//hits_left.ShowBitmap();
+	//background.ShowBitmap();			// 貼上背景圖
+	//help.ShowBitmap();					// 貼上說明圖
+	
 	
 	corner.SetTopLeft(0,0);
 	corner.ShowBitmap();
@@ -642,22 +483,22 @@ void CGameStateRun::OnShow()
 		maps[mapLevel]->OnShow(maps[mapLevel]);
 		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
-		//enemies[0]->OnShow(maps[0]);
-		//items[0]->OnShow(maps[0]);
-		//items[1]->OnShow(maps[0]);
-		//items[2]->OnShow(maps[0]);
-		//items[3]->OnShow(maps[mapLevel]);
 		break;
+
+
 	case 1:
-		
 		maps[mapLevel]->OnShow(maps[mapLevel]);
 		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
-		
-		//enemies2[0]->OnShow(maps[1]);
-		//items[1]->SetIsAlive(true);
-		//items[1]->OnShow(maps[1]);
 		break;
+
+
+	case 2:
+		maps[mapLevel]->OnShow(maps[mapLevel]);
+		eraser.OnShow(maps[mapLevel]);
+		bullet->OnShow(maps[mapLevel]);
+		break;
+
 	default:
 		break;
 	}

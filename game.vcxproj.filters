@@ -144,6 +144,12 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScrollMap.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Boss.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -195,6 +201,12 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\Item.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScrollMap.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss.h">
       <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -274,6 +286,21 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Bitmaps\shield.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\boss1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\boomerang_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\boomerang_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\boomerang_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\boomerang_4.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

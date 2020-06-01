@@ -72,6 +72,16 @@ IDB_ATK                 BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 
 IDB_SHIELD              BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\shield.bmp"
 
+IDB_BOSS_1              BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boss1.bmp"
+
+IDB_BOOMERANG_1         BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boomerang_1.bmp"
+
+IDB_BOOMERANG_2         BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boomerang_2.bmp"
+
+IDB_BOOMERANG_3         BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boomerang_3.bmp"
+
+IDB_BOOMERANG_4         BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boomerang_4.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

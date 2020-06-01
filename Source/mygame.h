@@ -46,6 +46,7 @@
 #include "CBullet.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "ScrollMap.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////

@@ -258,6 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\audio.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\CBullet.cpp" />
     <ClCompile Include="Source\CBall.cpp" />
     <ClCompile Include="Source\CBouncingBall.cpp" />
@@ -288,6 +289,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Source\ScrollMap.cpp" />
     <ClCompile Include="Source\StdAfx.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -312,6 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
+    <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\CBullet.h" />
     <ClInclude Include="Source\CBall.h" />
     <ClInclude Include="Source\CBouncingBall.h" />
@@ -325,6 +328,7 @@
     <ClInclude Include="Source\Lava_Rock_2.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Resource.h" />
+    <ClInclude Include="Source\ScrollMap.h" />
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
@@ -339,6 +343,11 @@
   <ItemGroup>
     <Image Include="Bitmaps\apple.bmp" />
     <Image Include="Bitmaps\ATK.bmp" />
+    <Image Include="Bitmaps\boomerang_1.bmp" />
+    <Image Include="Bitmaps\boomerang_2.bmp" />
+    <Image Include="Bitmaps\boomerang_3.bmp" />
+    <Image Include="Bitmaps\boomerang_4.bmp" />
+    <Image Include="Bitmaps\boss1.bmp" />
     <Image Include="Bitmaps\CH.bmp" />
     <Image Include="Bitmaps\character.bmp" />
     <Image Include="Bitmaps\duck.bmp" />

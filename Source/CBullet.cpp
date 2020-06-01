@@ -48,7 +48,7 @@ namespace game_framework {
 				if (this->x <= i+DISTENCE)
 				{
 					this->x += STEP_SIZE;
-					
+					SetFaceRight(true);
 				}
 				else {
 					SetIsAlive(false);
@@ -60,7 +60,7 @@ namespace game_framework {
 				int i = hero->GetX1();
 				if (this->x >i- DISTENCE) {
 					this->x -= STEP_SIZE;
-					
+					SetFaceRight(false);
 				}
 				else {
 					SetIsAlive(false);
@@ -98,8 +98,15 @@ namespace game_framework {
 			return;
 		}
 		if (IsAlive()) {
-			bullet_1.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bullet_1.ShowBitmap();
+			if (GetIsFaceToRight() == true) {
+				bullet_1.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+				bullet_1.ShowBitmap();
+			}
+			else {
+				bullet_0.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+				bullet_0.ShowBitmap();
+			}
+			
 		}
 		//bullet_1.ShowBitmap();
 	}

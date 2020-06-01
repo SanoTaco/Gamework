@@ -130,7 +130,7 @@ void game_framework::AbstractEnemy::ChaseHero(Map * map, CEraser * hero)
 	
 	if (IsAlive() == true) {
 		//enemy goes left
-		if (hero->GetX1() < this->GetX1()) {
+		if (hero->GetX1() < x) {
 			if (map->IsEmpty((x - 1), y) == true) {
 				x -= 1;
 			}
@@ -146,7 +146,7 @@ void game_framework::AbstractEnemy::ChaseHero(Map * map, CEraser * hero)
 		}
 
 		// enemy goes up
-		if (hero->GetY1() < this->GetY1()) {
+		if (hero->GetY1() < y) {
 			if (map->IsEmpty(x, (y - 1)) == true) {
 				y -= 1;
 			}
@@ -168,7 +168,7 @@ void game_framework::AbstractEnemy::OnShow(Map * m)
 		return;
 	}
 	if (IsAlive()) {
-		enemy_left.SetTopLeft(x, y);
+		enemy_left.SetTopLeft(m->ScreenX(x),m->ScreenY(y));
 		enemy_left.OnShow();
 	}
 }

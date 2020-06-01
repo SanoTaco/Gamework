@@ -69,30 +69,45 @@ namespace game_framework {
 	void CEraser::OnMove(Map *m)
 	{
 		const int STEP_SIZE = 5;
+		const int X_POS = 64;
 		animation.OnMove();
 		if (isMovingLeft) {
-			if (m->IsEmpty(x - 1, y) == true) {
+			if (m->IsEmpty(x - 5, y) == true && m->IsEmpty(x-1,y+animation.Height())==true) {
 				x -= STEP_SIZE;
+				if (m->ScreenX(x) < X_POS)//若主角荧幕坐标小于等于32时，荧幕伴随移动
+				{
+					if (!(m->GetX1() - STEP_SIZE < 0))//若荧幕左移后超出地图最左边，则不左移；不超过，则左移
+					{
+						m->SetX1Y1ToLeft(STEP_SIZE);
+					}
+				}
 			}
 			
 		}
 			
 		if (isMovingRight) {
-			if (m->IsEmpty(x + 1 + animation.Width(), y) == true) {
+			if (m->IsEmpty(x + 5 + animation.Width(), y) == true && m->IsEmpty(x + 1, y + animation.Height())==true ) {
 				x += STEP_SIZE;
+				if (m->ScreenX(x) + 320 > (640 - X_POS))
+				{
+					if (!(m->GetX1() + 640 + STEP_SIZE > 1919))
+					{
+						m->SetX1Y1ToRight(STEP_SIZE);
+					}
+				}
 			}
 			
 		}
 			
 		if (isMovingUp) {
-			if (m->IsEmpty(x, y - 1) == true) {
+			if (m->IsEmpty(x, y - 5) == true && m->IsEmpty(x+ animation.Width(), y -1) == true) {
 				y -= STEP_SIZE;
 			}
 			
 		}
 			
 		if (isMovingDown) {
-			if (m->IsEmpty(x, y + 1 + animation.Height()) == true) {
+			if (m->IsEmpty(x, y + 5 + animation.Height()) == true&& m->IsEmpty(x + animation.Width() , y + 1) == true) {
 				y += STEP_SIZE;
 			}
 			
@@ -265,11 +280,11 @@ namespace game_framework {
 		}
 		else {
 			if (isInvicible) {
-				invicible.SetTopLeft(x, y);
+				invicible.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 				invicible.OnShow();
 			}
 			else {
-				animation.SetTopLeft(x, y);
+				animation.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 				animation.OnShow();
 			}
 		}
