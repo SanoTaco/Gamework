@@ -124,6 +124,7 @@ void game_framework::ScrollMap::initialize()
 	boss->LoadBitmap();
 	boss->SetXY(700, 240);
 	boss->SetIsAlive(true);
+	boss->SetHP(20);
 
 	itemlist.push_back(new Item());
 	itemlist.push_back(new Potion());
@@ -145,7 +146,7 @@ void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * he
 {
 	hero->OnMove(map);
 	bullet->OnMove(hero);
-	boss->OnMove(map);
+	boss->OnMove(map,hero);
 
 	if (this->enemies[0]->Halt()) {
 		delayCounter++;
@@ -214,7 +215,14 @@ void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * he
 		}
 
 	}
-
+	if (boss->IsAlive() && boss->beShot(bullet)) {
+		boss->ChangeHP(-(hero->GetATK()));
+		bullet->SetIsAlive(false);
+		if ((boss->GetHP())<=0) {
+			hero->addPoint(10);
+			boss->SetIsAlive(false);
+		}
+	}
 
 
 

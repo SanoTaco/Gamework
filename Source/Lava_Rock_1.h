@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "CBullet.h"
+#include "UseableItem.h"
 namespace game_framework {
 
 	class Map {
@@ -58,6 +59,7 @@ namespace game_framework {
 		vector<AbstractItem*> itemlist;	//drop items
 		vector<AbstractEnemy*> ::const_iterator iter;
 		vector<AbstractItem *>::const_iterator item_iter;
+		vector<UseableItem*>	useableItems;
 		int delayCounter=0;
 		int invicibleCounter;
 		int randX = 0;

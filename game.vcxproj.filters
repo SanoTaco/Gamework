@@ -150,6 +150,12 @@
     <ClCompile Include="Source\Boss.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnenyBullet.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UseableItem.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -207,6 +213,12 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\Boss.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnenyBullet.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UseableItem.h">
       <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -301,6 +313,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Bitmaps\boomerang_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00004.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\enemymiddlefire.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\enemymiddlefire2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

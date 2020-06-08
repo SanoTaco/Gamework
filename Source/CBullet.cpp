@@ -178,7 +178,7 @@ namespace game_framework {
 				int i = hero->GetX2();
 				int j = hero->GetY1();
 				SetIsAlive(true);
-				SetXY(i + 1, j + 20);
+				//SetXY(i + 1, j + 20);
 				
 			}
 			if(nChar == KEY_SPACE && hero->GetIsFaceToRight() == false)                           //若人物面向左边
@@ -187,7 +187,7 @@ namespace game_framework {
 				int i = hero->GetX1();
 				int j = hero->GetY1();
 				SetIsAlive(true);
-				SetXY(i - bullet_1.Width() , j + 20);
+				//SetXY(i - bullet_1.Width() , j + 20);
 			}
 			if (hero->GetIsFaceToUp()&&nChar == KEY_SPACE) {
 				SetFaceUp(true);

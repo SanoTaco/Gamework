@@ -8,6 +8,7 @@
 #include "Lava_Rock_1.h"
 #include "CBullet.h"
 #include "Item.h"
+#include "UseableItem.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -52,6 +53,7 @@ namespace game_framework {
 		x = X_POS;
 		y = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
+		getUseableItem = false;
 	}
 
 	void CEraser::LoadBitmap()
@@ -227,6 +229,18 @@ namespace game_framework {
 		}
 	}
 
+	bool CEraser::GetUseableItem(UseableItem* useable)
+	{
+		if (useable->IsAlive()) {
+			return HitRectangle(useable->GetX1(), useable->GetY1(), useable->GetX2(), useable->GetY2());
+		}
+		else {
+			return false;
+		}
+		
+		
+	}
+
 	int CEraser::GetATK()
 	{
 		return atk;
@@ -255,6 +269,16 @@ namespace game_framework {
 	void CEraser::SetShield(bool flag)
 	{
 		getShield = flag;
+	}
+
+	bool CEraser::IsGetUseableItem()
+	{
+		return getUseableItem;
+	}
+
+	void CEraser::SetGetUseableItem(bool flag)
+	{
+		getUseableItem = flag;
 	}
 
 	bool CEraser::HitRectangle(int tx1, int ty1, int tx2, int ty2)

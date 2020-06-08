@@ -29,9 +29,6 @@ namespace game_framework {
 	protected:
 		
 		//CMovingBitmap explosion;
-
-
-	private:
 		CMovingBitmap bullet_1;
 		CMovingBitmap bullet_0;
 		bool is_alive;				                                  // ÊÇ·ñ»îÖø
@@ -41,5 +38,27 @@ namespace game_framework {
 		bool isFaceToUp;
 		bool isFaceToDown;
 	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

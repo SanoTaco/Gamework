@@ -82,6 +82,10 @@ IDB_BOOMERANG_3         BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 
 IDB_BOOMERANG_4         BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boomerang_4.bmp"
 
+IDB_BOSSFIRE_LEFT       BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\enemymiddlefire.bmp"
+
+IDB_BOSSFIRE_RIGHT      BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\enemymiddlefire2.bmp"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

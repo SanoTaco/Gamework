@@ -48,9 +48,11 @@ void game_framework::Lava_Rock_1::initialize()
 	itemlist.push_back(new Potion());
 	itemlist.push_back(new Shield());
 	
-
-
-
+	useableItems.push_back(new UseableItem());
+	useableItems[0]->LoadBitmap();
+	useableItems[0]->SetXY(130, 130);
+	
+	useableItems[0]->SetIsAlive(true);
 	int i = 1;
 
 	for (iter = enemies.begin(); iter != enemies.end();iter++) {
@@ -76,7 +78,7 @@ void game_framework::Lava_Rock_1::initialize()
 		(*item_iter)->LoadBitmap();
 		(*item_iter)->SetIsAlive(false);
 	}
-
+	
 }
 
 
@@ -107,9 +109,15 @@ void game_framework::Lava_Rock_1::interact(Map* map,int &mapLevel, CEraser* hero
 	{
 		enemies[0]->OnMove(map);
 	}
-
-
-
+	
+	if (useableItems[0]->GetIsUsed() == false) {
+		if (hero->GetUseableItem(useableItems[0])) {
+			useableItems[0]->SetIsAlive(false);
+			hero->SetGetUseableItem(true);
+		}
+	}
+	
+	useableItems[0]->OnMove(map, hero);
 	bullet->OnMove(hero);
 
 	if (map->IsEnterTheDoor(hero)) {
@@ -284,7 +292,7 @@ void game_framework::Lava_Rock_1::OnShow(Map* map)
 			(*item_iter)->OnShow(map);
 		}
 	}
-
+	useableItems[0]->OnShow(map);
 
 
 

@@ -3,6 +3,8 @@ namespace game_framework {
 	class Map;
 	class CBullet;
 	class CEraser;
+	class EnemyBullet;
+
 	class AbstractBoss {
 	public:
 
@@ -24,6 +26,9 @@ namespace game_framework {
 		virtual bool touchHero(CEraser* hero) = 0;
 		virtual bool IsAlive() = 0;
 		virtual void SetIsAlive(bool flag);
+		virtual bool IsFaceLeft();
+		virtual void SetFaceLeft(bool flag);
+		virtual void Halt() = 0;
 	protected:
 		CAnimation boss;
 		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);
@@ -32,6 +37,7 @@ namespace game_framework {
 		//int x1, y1;
 		int atk;
 		bool is_alive;
+		bool face_left;
 	};
 
 
@@ -53,13 +59,14 @@ namespace game_framework {
 		void SetATK(int flag);
 		int GetATK();
 		int GetHP();
+		void Halt();
 		bool IsAlive();
 		bool touchHero(CEraser* hero);
 
 
 
 	private:
-		
+		vector<EnemyBullet*> ebullet;
 
 	};
 

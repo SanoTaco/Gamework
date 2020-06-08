@@ -197,6 +197,7 @@ CGameStateRun::CGameStateRun(CGame *g)
 	maps.push_back(new Lava_Rock_2());
 	maps.push_back(new ScrollMap());
 	bullet = new CBullet();
+	useableItems.push_back(new UseableItem());
 	//enemies.push_back(new EnemyDuck());
 	//enemies2.push_back(new EnchancedEnemy());
 	//items.push_back(new Item());
@@ -249,6 +250,7 @@ void CGameStateRun::OnBeginState()
 	
 	
 	
+	
 }
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
@@ -257,7 +259,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_RIGHT = 0x27; // keyboard右箭頭
 	const char KEY_DOWN = 0x28; // keyboard下箭頭
 	const int KEY_SPACE = 0x20;  //keyboard空格键
-
+	const int KEY_X = 0x58;
 	CEraser* hero = &eraser;
 	Map* map = maps[mapLevel];
 
@@ -287,6 +289,13 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			//bullet->OnMove();
 		}
 	}
+	if (!useableItems[0]->IsAlive()) {
+		if (nChar == KEY_X) {
+			useableItems[0]->OnKeyDown(nChar, &eraser, map);
+			
+		}
+	}
+	
 	
 }
 
@@ -392,6 +401,8 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	shield.LoadBitmap(IDB_SHIELD, RGB(255, 255, 255));
 	eraser.LoadBitmap();
 	bullet->LoadBitmap();
+	useableItems[0]->LoadBitmap();
+	boomerang.LoadBitmap(IDB_BOOMERANG_1,RGB(0,0,0));
 	//enemies[0]->LoadBitmap();
 	//enemies2[0]->LoadBitmap();
 	//enemies2[0]->SetXY(520, 48);
@@ -483,6 +494,7 @@ void CGameStateRun::OnShow()
 		maps[mapLevel]->OnShow(maps[mapLevel]);
 		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
+		useableItems[0]->OnShow(maps[mapLevel]);
 		break;
 
 
@@ -521,6 +533,10 @@ void CGameStateRun::OnShow()
 	if (hero->IsGetShiedl() == true) {
 		shield.SetTopLeft(250, 430);
 		shield.ShowBitmap();
+	}
+	if (hero->IsGetUseableItem()) {
+		boomerang.SetTopLeft(400, 430);
+		boomerang.ShowBitmap();
 	}
 	points.SetInteger(hero->GetPoint());
 	points.ShowBitmap();

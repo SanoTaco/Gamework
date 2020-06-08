@@ -4,19 +4,24 @@
 #include <ddraw.h>
 #include "audio.h"
 #include "gamelib.h"
+#include "EnenyBullet.h"
 #include "Boss.h"
 #include "Lava_Rock_1.h"
 #include "CEraser.h"
+
+
 
 namespace game_framework {
 
 	BigBoss_1::BigBoss_1()
 	{
-		hp = 10;
+		hp = 20;
 		x = y = 0;
 		atk = 2;
 		is_alive = true;
-
+		ebullet.push_back(new EnemyBullet());
+		ebullet.push_back(new EnemyBullet());
+		ebullet.push_back(new EnemyBullet());
 	}
 
 	void BigBoss_1::LoadBitmap()
@@ -35,10 +40,50 @@ namespace game_framework {
 
 	void BigBoss_1::OnMove(Map * map, CEraser* hero)
 	{
+		if (GetX2() >= 1850) {
+			x += 0;
+			SetXY(GetX1() - 600, GetY1());
+		}
+		else if (GetX1() <= 70) {
+			x -= 0;
+			SetXY(GetX1() + 600, GetY1());
+		}
+		else {
+			if (abs(GetX1() - hero->GetX2()) < 200) {
+				//hero has been deceted 
+				if ((hero->GetX1()) < GetX1()) {
+					// hero is on the left side
+					SetFaceLeft(true);
+					if (IsFaceLeft() && ((GetX1() - hero->GetX2()) < 130)) {
+						x += 7;
+					}
+					else if (IsFaceLeft() && ((GetX1() - hero->GetX2()) > 200)) {
+						x -= 7;
+					}
+
+				}
+				else if ((hero->GetX1()) > GetX1()) {
+					SetFaceLeft(false);
+					if (!IsFaceLeft() && ((GetX1() - hero->GetX2()) < 130)) {
+						x += 7;
+					}
+					else if (!IsFaceLeft() && ((GetX1() - hero->GetX2()) > 200)) {
+						x -= 7;
+					}
+				}
+			}
+			else {
+
+			}
+		}
+		
+		
+
 	}
 
 	void BigBoss_1::Shoot()
 	{
+		
 	}
 
 	bool BigBoss_1::beShot(CBullet * bullet)
@@ -113,6 +158,12 @@ namespace game_framework {
 		return hp;
 	}
 
+	void BigBoss_1::Halt()
+	{
+		x += 0;
+		y += 0;
+	}
+
 	bool BigBoss_1::IsAlive()
 	{
 		return is_alive;
@@ -148,6 +199,16 @@ namespace game_framework {
 	void AbstractBoss::SetIsAlive(bool flag)
 	{
 		is_alive = flag;
+	}
+
+	bool AbstractBoss::IsFaceLeft()
+	{
+		return face_left;
+	}
+
+	void AbstractBoss::SetFaceLeft(bool flag)
+	{
+		face_left = flag;
 	}
 
 	bool AbstractBoss::HitRectangle(int tx1, int ty1, int tx2, int ty2)

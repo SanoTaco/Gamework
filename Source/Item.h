@@ -22,12 +22,12 @@ namespace game_framework {
 	class Item :public AbstractItem{
 	public:
 		Item();
-		 ~Item();
-		 void OnShow(Map* map);
+		~Item();
+		void OnShow(Map* map);
 		void OnMove();
-		 void LoadBitmap();
-		 int Usage();
-		 int Effect();
+		void LoadBitmap();
+		int Usage();
+		int Effect();
 		int GetX1();
 		int GetY1();
 		int GetX2();

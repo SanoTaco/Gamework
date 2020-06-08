@@ -266,6 +266,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\EnenyBullet.cpp" />
     <ClCompile Include="Source\game.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -311,6 +312,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\UseableItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -320,6 +322,7 @@
     <ClInclude Include="Source\CBouncingBall.h" />
     <ClInclude Include="Source\CEraser.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\EnenyBullet.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
@@ -332,6 +335,7 @@
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
+    <ClInclude Include="Source\UseableItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
@@ -352,6 +356,8 @@
     <Image Include="Bitmaps\character.bmp" />
     <Image Include="Bitmaps\duck.bmp" />
     <Image Include="Bitmaps\enchanted_monsster_1.bmp" />
+    <Image Include="Bitmaps\enemymiddlefire.bmp" />
+    <Image Include="Bitmaps\enemymiddlefire2.bmp" />
     <Image Include="Bitmaps\InvicibleHero.bmp" />
     <Image Include="Bitmaps\lava_1.bmp" />
     <Image Include="Bitmaps\points.bmp" />
@@ -364,6 +370,7 @@
     <Image Include="res\bmp00001.bmp" />
     <Image Include="res\bmp00002.bmp" />
     <Image Include="res\bmp00003.bmp" />
+    <Image Include="res\bmp00004.bmp" />
     <Image Include="res\borader.bmp" />
     <Image Include="res\bullet_0.bmp" />
     <Image Include="res\BULLET_1.bmp" />

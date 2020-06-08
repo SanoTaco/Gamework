@@ -47,6 +47,8 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "ScrollMap.h"
+#include "UseableItem.h"
+
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -163,6 +165,7 @@ namespace game_framework {
 		int				point = 0;
 		bool			heroGetsATK= false;
 		CBullet			*bullet;
+		vector<UseableItem*> useableItems;
 		vector<Map *> maps;
 		vector<AbstractEnemy*> enemies;
 		vector<AbstractEnemy*> enemies2;
@@ -172,6 +175,7 @@ namespace game_framework {
 		CMovingBitmap	threeHeart;
 		CMovingBitmap	atk;
 		CMovingBitmap	shield;
+		CMovingBitmap	boomerang;
 		//Hero			hero;
 		//Character		*character;
 

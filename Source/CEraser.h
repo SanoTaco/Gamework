@@ -6,6 +6,7 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	class Map;
 	class AbstractItem;
+	class UseableItem;
 	class CEraser
 	{
 	public:
@@ -40,13 +41,16 @@ namespace game_framework {
 		bool GetIsInvincible();
 		bool IsMovingUp() { return isMovingUp; };
 		bool GetItem(AbstractItem* item);
+		bool GetUseableItem(UseableItem* useable);
 		int GetATK();
 		bool IsATKUp();
 		void SetIsATKUp(bool flag);
 		void SetATK(int num);
 		bool IsGetShiedl();
 		void SetShield(bool flag);
-		
+		bool IsGetUseableItem();
+		void SetGetUseableItem(bool flag);
+
 	protected:
 		CAnimation animation;		// 擦子的動畫	
 		CAnimation	invicible;
@@ -64,6 +68,7 @@ namespace game_framework {
 		bool isAlive;
 		bool getATK;
 		bool getShield;
+		bool getUseableItem;
 		int point;
 		int invicibleCounter;
 
