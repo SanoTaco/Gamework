@@ -4,9 +4,8 @@ namespace game_framework {
 	class AbstractBoss;
 	class EnemyBullet {
 	public:
-
 		EnemyBullet();
-
+		~EnemyBullet() {};
 		bool IsAlive();											// 是否活著
 		void LoadBitmap();                                      // 載入圖形
 		void OnMove(AbstractBoss* boss,int  ymove);						   // 移動
@@ -29,34 +28,6 @@ namespace game_framework {
 		int x, y;
 		bool isFaceToLeft;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

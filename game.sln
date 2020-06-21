@@ -9,6 +9,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "gameSetup.vdproj",
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "以撒（横板）", "C:\Users\PC\Desktop\OOP实习\以撒（横板）\以撒（横板）.vdproj", "{6FAFD067-253B-4F3C-A006-FB2982D691DF}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ISA_ScrollVersion", "Setup-files\ISA_ScrollVersion\ISA_ScrollVersion.vdproj", "{29686B3A-4AFC-43D9-A044-55A482D4ABC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -24,6 +26,8 @@ Global
 		{984E2E2A-0DB0-4F9D-9E5C-A3C536609A39}.Release|Win32.Build.0 = Release
 		{6FAFD067-253B-4F3C-A006-FB2982D691DF}.Debug|Win32.ActiveCfg = Debug
 		{6FAFD067-253B-4F3C-A006-FB2982D691DF}.Release|Win32.ActiveCfg = Release
+		{29686B3A-4AFC-43D9-A044-55A482D4ABC3}.Debug|Win32.ActiveCfg = Debug
+		{29686B3A-4AFC-43D9-A044-55A482D4ABC3}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

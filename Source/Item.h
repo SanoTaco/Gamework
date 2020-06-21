@@ -142,7 +142,27 @@ namespace game_framework {
 		bool isalive = false;
 	};
 
-
+	class Useable :public AbstractItem {
+	public:
+		Useable();
+		void OnShow(Map* map);
+		void SetXY(int nx, int ny);
+		void LoadBitmap();
+		int Usage();
+		int Effect();
+		int GetX1();
+		int GetY1();
+		int GetX2();
+		int GetY2();
+		bool GetIsAlive();
+		void SetIsAlive(bool flag);
+	private:
+		CMovingBitmap useable;
+		int effect, usage;
+		int x;
+		int y;
+		bool isalive = false;
+	};
 
 }
 

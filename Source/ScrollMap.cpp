@@ -40,6 +40,19 @@ game_framework::ScrollMap::ScrollMap() : X1(0), Y1(0), MW(64), MH(48)
 
 }
 
+game_framework::ScrollMap::~ScrollMap()
+{
+
+	for (iter = enemies.begin(); iter != enemies.end(); iter++) {
+		delete (*iter);
+	}
+	
+	for (item_iter = itemlist.begin(); item_iter != itemlist.end(); item_iter++) {
+		delete (*item_iter);
+	}
+	delete boss;
+}
+
 void game_framework::ScrollMap::LoadBitmap()
 {
 	lava.LoadBitmap(IDB_LAVA_1);
@@ -122,7 +135,7 @@ void game_framework::ScrollMap::initialize()
 	enemies.push_back(new EnchancedEnemy());
 	boss = new BigBoss_1();
 	boss->LoadBitmap();
-	boss->SetXY(700, 240);
+	boss->SetXY(1700, 150);
 	boss->SetIsAlive(true);
 	boss->SetHP(20);
 
@@ -142,12 +155,13 @@ void game_framework::ScrollMap::initialize()
 	}
 }
 
-void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * hero, CBullet * bullet)
+void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * hero, CBullet * bullet, Boomerang* boomerangItem)
 {
 	hero->OnMove(map);
 	bullet->OnMove(hero);
-	boss->OnMove(map,hero);
 
+	
+	boomerangItem->OnMove(hero);
 	if (this->enemies[0]->Halt()) {
 		delayCounter++;
 		if (delayCounter > 30 && delayCounter < 60) {
@@ -174,6 +188,29 @@ void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * he
 		
 	
 	enemies[2]->ChaseHero(map, hero);
+
+	if (boss->isShot()) {
+		int i = rand() % 2;
+		switch (i) {
+		case 0:
+			boss->floating();
+			break;
+		case 1:
+			boss->AimingHero(hero);
+			break;
+			
+		default:
+			break;
+		}
+	}
+	
+	
+	boss->OnMove(map, hero);
+	if (boss->IsAlive() == false) {
+		hero->SetIsInvincible(true);
+		
+		
+	}
 
 	// drop items
 	for (item_iter = itemlist.begin(); item_iter != itemlist.end(); item_iter++) {
@@ -216,34 +253,75 @@ void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * he
 
 	}
 	if (boss->IsAlive() && boss->beShot(bullet)) {
+		CAudio::Instance()->Play(AUDIO_MONSTERDEATH, false);
 		boss->ChangeHP(-(hero->GetATK()));
 		bullet->SetIsAlive(false);
 		if ((boss->GetHP())<=0) {
 			hero->addPoint(10);
 			boss->SetIsAlive(false);
+			CAudio::Instance()->Play(AUDIO_DING, false);
+			CAudio::Instance()->Play(AUDIO_CHEERS, false);
 		}
+
 	}
+	if (boss->IsAlive() && boss->beShotByItem(boomerangItem)) {
+		CAudio::Instance()->Play(AUDIO_MONSTERDEATH, false);
 
+		boss->ChangeHP(-10);
+		boomerangItem->SetIsAlive(false);
+		if ((boss->GetHP()) <= 0) {
+			hero->addPoint(10);
+			boss->SetIsAlive(false);
+			CAudio::Instance()->Play(AUDIO_DING, false);
+			CAudio::Instance()->Play(AUDIO_CHEERS, false);
+		}
 
+	}
+	
 
 	for (iter = enemies.begin(); iter != enemies.end(); iter++) {
+	
+
 		if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
+			CAudio::Instance()->Play(AUDIO_MONSTERDEATH, false);
+
 			(*iter)->ChangeHP(-(hero->GetATK()));
 			bullet->SetIsAlive(false);//子弹死了
 			if ((*iter)->GetHP() <= 0) {
 				(*iter)->SetIsAlive(false);//敌人死了
 				//points.Add(1);
 				hero->addPoint(1);
+				CAudio::Instance()->Play(AUDIO_DING, false);
+
 				map->dropItem((*iter), itemlist);
+				CAudio::Instance()->Play(AUDIO_MONSTERLAUGHTER, false);
 
 			}
 
+		}
+		if ((*iter)->IsAlive() && (*iter)->beShotByItem(boomerangItem)) {
+			CAudio::Instance()->Play(AUDIO_MONSTERDEATH, false);
+
+			(*iter)->ChangeHP(-10);
+			boomerangItem->SetIsAlive(false);
+			if ((*iter)->GetHP() <= 0) {
+				(*iter)->SetIsAlive(false);//敌人死了
+				
+				hero->addPoint(1);
+				CAudio::Instance()->Play(AUDIO_DING, false);
+
+				map->dropItem((*iter), itemlist);
+				CAudio::Instance()->Play(AUDIO_MONSTERLAUGHTER, false);
+
+			}
 		}
 
 		if (hero->IsAlive() && (*iter)->touchHero(hero)) {
 			if (hero->IsGetShiedl() == true) {
 				hero->SetShield(false);
 				hero->SetIsInvincible(true);
+				CAudio::Instance()->Play(AUDIO_HEROBELIGHTENED, false);
+
 			}
 			else {
 				hero->SetIsInvincible(true);
@@ -268,6 +346,11 @@ void game_framework::ScrollMap::interact(Map * map, int & mapLevel, CEraser * he
 
 
 
+}
+
+bool game_framework::ScrollMap::GetBossAlive()
+{
+	return boss->IsAlive();
 }
 
 void game_framework::ScrollMap::dropItem(AbstractEnemy * enemy, vector<AbstractItem*> itemlist)

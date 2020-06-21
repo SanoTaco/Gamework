@@ -25,44 +25,12 @@ void game_framework::UseableItem::LoadBitmap()
 
 }
 
-void game_framework::UseableItem::OnMove(Map* map, CEraser* hero)
+void game_framework::UseableItem::OnMove()
 {
-	const int DISTANCE = 200;
-	const int STEP_SIZE = 20;
 	
-	
-	if (GetIsUsed()) {
-		if (IsFaceToRight()) {
-			if (x < (hero->GetX2() + DISTANCE)) {
-				x += STEP_SIZE;
-			}
-			else {
-				Retrive(map, hero);
-			}
-			
-		}
-		else
-		{
-			if (x < (hero->GetX1() - DISTANCE)) {
-				x -= STEP_SIZE;
-			}
-			else {
-				Retrive(map, hero);
-			}
-
-		}
-	}
 }
 
-void game_framework::UseableItem::Retrive(Map * map, CEraser * hero)
-{
-	if (hero->GetX2() < x) {
-		x -= 8;
-	}
-	if (hero->GetX1() > x) {
-		x += 8;
-	}
-}
+
 
 void game_framework::UseableItem::OnShow(Map * map)
 {
@@ -118,17 +86,6 @@ void game_framework::UseableItem::SetIsUsed(bool flag)
 	is_used = flag;
 }
 
-bool game_framework::UseableItem::IsFaceToRight()
-{
-	return isFaceToRight;
-}
-
-void game_framework::UseableItem::SetFaceToRight(bool flag)
-{
-	isFaceToRight = flag;
-}
-
-
 
 bool game_framework::UseableItem::IsAlive()
 {
@@ -140,31 +97,3 @@ void game_framework::UseableItem::SetIsAlive(bool flag)
 	isAlive = flag;
 }
 
-void game_framework::UseableItem::OnKeyDown(UINT nChar, CEraser * hero, Map * map)
-{
-	const int KEY_X = 0x58;
-
-	if (nChar == KEY_X)
-	{
-		if (hero->GetIsFaceToRight() && nChar == KEY_X)      //若人物面向右边
-		{
-			SetFaceToRight(hero->GetIsFaceToRight());//则设置子弹方向为右边
-			int i = hero->GetX2();
-			int j = hero->GetY1();
-			SetIsUsed(true);
-			SetIsAlive(true);
-			SetXY(i + 1, j );
-
-		}
-		if (nChar == KEY_X && hero->GetIsFaceToRight() == false)                           //若人物面向左边
-		{
-			SetFaceToRight(hero->GetIsFaceToRight());//则设置子弹方向为左边
-			int i = hero->GetX1();
-			int j = hero->GetY1();
-			SetIsUsed(true);
-			SetIsAlive(true);
-			SetXY(i - useable.Width() , j );
-		}
-		
-	}
-}

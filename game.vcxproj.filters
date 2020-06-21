@@ -123,12 +123,6 @@
     <ClCompile Include="Source\CEraser.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CBall.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CBouncingBall.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Lava_Rock_1.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
@@ -186,12 +180,6 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\CEraser.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CBall.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CBouncingBall.h">
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\Lava_Rock_1.h">
@@ -322,6 +310,19 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Bitmaps\enemymiddlefire2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\boss2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\StateInit_background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\tips.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\Victory.png" />
+    <Image Include="Bitmaps\Victory.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

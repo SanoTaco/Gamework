@@ -59,9 +59,7 @@ namespace game_framework {
 	void CEraser::LoadBitmap()
 	{
 		animation.AddBitmap(IDB_HERO, RGB(0, 0, 0));
-		//animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
-		//animation.AddBitmap(IDB_ERASER3, RGB(255, 255, 255));
-		//animation.AddBitmap(IDB_ERASER2, RGB(255, 255, 255));
+		
 
 		invicible.AddBitmap(IDB_INVICIBLE, RGB(255, 255,255));
 		invicible.AddBitmap(IDB_HERO, RGB(0, 0, 0));
@@ -241,6 +239,8 @@ namespace game_framework {
 		
 	}
 
+	
+
 	int CEraser::GetATK()
 	{
 		return atk;
@@ -306,6 +306,8 @@ namespace game_framework {
 			if (isInvicible) {
 				invicible.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
 				invicible.OnShow();
+				
+
 			}
 			else {
 				animation.SetTopLeft(map->ScreenX(x), map->ScreenY(y));

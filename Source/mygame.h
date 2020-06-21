@@ -39,8 +39,6 @@
 */
 #include <vector>
 #include "CEraser.h"
-#include "CBall.h"
-#include "CBouncingBall.h"
 #include "Lava_Rock_1.h"
 #include "Lava_Rock_2.h"
 #include "CBullet.h"
@@ -55,11 +53,7 @@ namespace game_framework {
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
 
-	enum AUDIO_ID {				// 定義各種音效的編號
-		AUDIO_DING,				// 0
-		AUDIO_LAKE,				// 1
-		AUDIO_NTUT				// 2
-	};
+	
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為游戲的游戲開頭畫面物件
@@ -77,52 +71,8 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的游戲畫面
 	private:
 		CMovingBitmap logo;								// csie的logo
+		CMovingBitmap tips;
 	};
-
-	///////////////////////////////////////////////////////////////////////////////
-	//Practise
-	//////////////////////////////////////////////////////////////////////////////
-	/*
-	
-	class CPractice {
-	public: 
-		CPractice();
-		void LoadBitmap();
-		void OnMove();
-		void OnShow();
-	private:
-		CMovingBitmap pic;
-		int x, y;
-	};
-	class CGameMap
-	{
-	public:
-		CGameMap();
-		void LoadBitMap();
-		void OnShow();
-	protected:
-		CMovingBitmap green, blue;
-		int map[4][5];
-		const int X, Y;
-		const int MH, MW; //地图的宽和高
-
-	};
-
-
-	
-	
-	*/
-	
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -164,8 +114,9 @@ namespace game_framework {
 		int				delayCounter = 0;
 		int				point = 0;
 		bool			heroGetsATK= false;
-		CBullet			*bullet;
-		vector<UseableItem*> useableItems;
+		CBullet*			bullet;
+		Boomerang*			boomerangItem;
+		//vector<UseableItem*> useableItems;
 		vector<Map *> maps;
 		vector<AbstractEnemy*> enemies;
 		vector<AbstractEnemy*> enemies2;
@@ -176,20 +127,9 @@ namespace game_framework {
 		CMovingBitmap	atk;
 		CMovingBitmap	shield;
 		CMovingBitmap	boomerang;
-		//Hero			hero;
-		//Character		*character;
+		CMovingBitmap	victory;
 
-		///////////////////////////////////////////////////////
-		//practise
-		///////////////////////////////////////////////////////
-		/*
-		CMovingBitmap practice;
-		CMovingBitmap practice_2;
-		CMovingBitmap borader;
-		int picX, picY;
-		CPractice c_practice;
-		CGameMap gamemap;
-		*/
+		
 		
 
 	};

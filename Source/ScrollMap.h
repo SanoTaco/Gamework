@@ -6,6 +6,7 @@ namespace game_framework {
 	class ScrollMap :public Map {
 	public:
 		ScrollMap();
+		~ScrollMap();
 		void LoadBitmap();
 		void OnShow(Map* map);        //显示地图
 		int  GetX1();          //得到荧幕左上角在地图上的X坐标
@@ -13,8 +14,8 @@ namespace game_framework {
 		void SetX1(int &x);
 		void SetY1(int &y);
 		void initialize();
-		void interact(Map* map, int &mapLevel, CEraser* hero, CBullet* bullet);
-		   
+		void interact(Map* map, int &mapLevel, CEraser* hero, CBullet* bullet, Boomerang* boomerangItem);
+		bool GetBossAlive();
 		void dropItem(AbstractEnemy* enemy, vector<AbstractItem*> itemlist);
 		bool isScrol();
 
@@ -37,8 +38,8 @@ namespace game_framework {
 		int X1, Y1;                  //大地图的左上角x,y坐标(荧幕在地图上的位置)
 		int MW, MH;         //每张小地图的宽和高
 		int invicibleCounter;
-		int delayCounter = 0;
-
+		int delayCounter = 0;// normal enemies delay counter
+		
 
 	};
 

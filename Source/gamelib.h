@@ -122,6 +122,25 @@ namespace game_framework {
 // 一般的游戲并不需直接操作這個物件，因此可以不管這個class的使用方法
 /////////////////////////////////////////////////////////////////////////////
 
+	enum AUDIO_ID {				// 定義各種音效的編號
+		AUDIO_DING,				// 0
+		AUDIO_LAKE,				// 1
+		AUDIO_NTUT,				// 2
+		AUDIO_MONSTERDEATH,
+		AUDIO_HEROBELIGHTENED,
+		AUDIO_CHEERS,
+		AUDIO_HEROBULLETEXPLOSION,
+		AUDIO_GANMEBACKGROUND,
+		AUDIO_MONSTERLAUGHTER,
+
+		AUDIO_BOOMERANG,
+		AUDIO_ENCHANCEDENEMY,
+		AUDIO_BOSSFIRE,
+		AUDIO_ENEMYDUCK
+	};
+
+
+
 class CSpecialEffect {
 public:
 	static void  SetCurrentTime();					// 儲存目前的時間至ctime

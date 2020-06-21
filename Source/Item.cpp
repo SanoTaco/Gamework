@@ -363,3 +363,72 @@ void game_framework::Shield::SetIsAlive(bool flag)
 {
 	isalive = flag;
 }
+
+game_framework::Useable::Useable()
+{
+	usage = 5;
+	effect = 1;
+	x = y = 0;
+}
+
+void game_framework::Useable::OnShow(Map * map)
+{
+	if (!GetIsAlive()) {
+		return;
+	}
+	else {
+		useable.SetTopLeft(map->ScreenX(x), map->ScreenY(y));
+		useable.ShowBitmap();
+	}
+}
+
+void game_framework::Useable::SetXY(int nx, int ny)
+{
+	x = nx;
+	y = ny;
+}
+
+void game_framework::Useable::LoadBitmap()
+{
+	useable.LoadBitmap(IDB_BOOMERANG_1, RGB(0, 255, 0));
+}
+
+int game_framework::Useable::Usage()
+{
+	return usage;
+}
+
+int game_framework::Useable::Effect()
+{
+	return 5;
+}
+
+int game_framework::Useable::GetX1()
+{
+	return x;
+}
+
+int game_framework::Useable::GetY1()
+{
+	return y;
+}
+
+int game_framework::Useable::GetX2()
+{
+	return x + useable.Width();
+}
+
+int game_framework::Useable::GetY2()
+{
+	return y + useable.Height();
+}
+
+bool game_framework::Useable::GetIsAlive()
+{
+	return isalive;
+}
+
+void game_framework::Useable::SetIsAlive(bool flag)
+{
+	isalive = flag;
+}

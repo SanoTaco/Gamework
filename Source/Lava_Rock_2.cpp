@@ -29,6 +29,20 @@ game_framework::Lava_Rock_2::Lava_Rock_2() :X(0), Y(0), MW(64), MH(48)
 	}
 }
 
+game_framework::Lava_Rock_2::~Lava_Rock_2()
+{
+
+	for (iter = enemies.begin(); iter != enemies.end(); iter++) {
+		delete (*iter);
+	}
+	for (item_iter = items.begin(); item_iter != items.end(); item_iter++) {
+		delete (*item_iter);
+	}
+	for (item_iter = itemlist.begin(); item_iter != itemlist.end(); item_iter++) {
+		delete (*item_iter);
+	}
+}
+
 
 void game_framework::Lava_Rock_2::OnShow(Map* map)
 {
@@ -84,17 +98,17 @@ bool game_framework::Lava_Rock_2::IsEmpty(int x, int y)
 	return lavaMap[gx][gy] == 0; // 假設 0 代表空的
 }
 
-void game_framework::Lava_Rock_2::interact(Map * map, int &mapLevel, CEraser * hero, CBullet * bullet)
+void game_framework::Lava_Rock_2::interact(Map * map, int &mapLevel, CEraser * hero, CBullet * bullet, Boomerang* boomerangItem)
 {
 	hero->OnMove(map);
 	//hero in the  map
 
 
-
+	
 	
 	enemies[0]->ChaseHero(map, hero);
 
-
+	boomerangItem->OnMove(hero);
 	bullet->OnMove(hero);
 
 	if (map->IsEnterTheDoor(hero)) {
@@ -137,6 +151,9 @@ void game_framework::Lava_Rock_2::interact(Map * map, int &mapLevel, CEraser * h
 			}
 			if ((*item_iter)->Usage() == 4) {
 				hero->SetShield(true);
+			}
+			if ((*item_iter)->Usage() == 5) {
+				hero->SetGetUseableItem(true);
 			}
 			(*item_iter)->SetIsAlive(false);
 		}
@@ -187,21 +204,37 @@ void game_framework::Lava_Rock_2::interact(Map * map, int &mapLevel, CEraser * h
 
 	for (iter = enemies.begin(); iter != enemies.end(); iter++) {
 		if ((*iter)->IsAlive() && (*iter)->beShot(bullet)) {
+			
 			(*iter)->ChangeHP(-(hero->GetATK()));
 			bullet->SetIsAlive(false);//子弹死了
+			if ((*iter)->GetHP() <= 0) {
+				(*iter)->SetIsAlive(false);//敌人死了
+				CAudio::Instance()->Play(AUDIO_ENCHANCEDENEMY, false);
+				//points.Add(1);
+				hero->addPoint(1);
+				CAudio::Instance()->Play(AUDIO_DING, false);
+				map->dropItem((*iter), itemlist);
+				CAudio::Instance()->Play(AUDIO_MONSTERDEATH, false);
+			}
+
+		}
+		if ((*iter)->IsAlive() && (*iter)->beShotByItem(boomerangItem)) {
+			(*iter)->ChangeHP(-10);
+			boomerangItem->SetIsAlive(false);
 			if ((*iter)->GetHP() <= 0) {
 				(*iter)->SetIsAlive(false);//敌人死了
 				//points.Add(1);
 				hero->addPoint(1);
 				map->dropItem((*iter), itemlist);
-			}
 
+			}
 		}
 
 		if (hero->IsAlive() && (*iter)->touchHero(hero)) {
 			if (hero->IsGetShiedl() == true) {
 				hero->SetShield(false);
 				hero->SetIsInvincible(true);
+				CAudio::Instance()->Play(AUDIO_HEROBELIGHTENED, false);
 			}
 			else {
 				hero->SetIsInvincible(true);
@@ -320,6 +353,11 @@ void game_framework::Lava_Rock_2::GetRandomItem(AbstractItem * item)
 }
 
 bool game_framework::Lava_Rock_2::isScrol()
+{
+	return false;
+}
+
+bool game_framework::Lava_Rock_2::GetBossAlive()
 {
 	return false;
 }

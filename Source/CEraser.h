@@ -74,16 +74,4 @@ namespace game_framework {
 
 	};
 
-	
-
-
-
-
-
-
-
-
-
-
-
 }

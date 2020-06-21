@@ -3,6 +3,7 @@
 namespace game_framework {
 	class Map;
 	class CBullet;
+	class Boomerang;
 	class AbstractEnemy {
 
 	public:
@@ -15,12 +16,12 @@ namespace game_framework {
 		void ChaseHero(Map* map, CEraser* hero);
 		void OnShow(Map* m);											// 將圖形貼到畫面
 		bool beShot(CBullet *bullet);						    // 是否被射到
+		bool beShotByItem(Boomerang* boomerang);
 		void SetXY(int nx, int ny);								// 設定敌人左上角的座標		
 		int  GetX1();					                    // 敌人左上角 x 座標
 		int  GetY1();					                   // 敌人左上角 y 座標
 		int  GetX2();					                   // 敌人右下角 x 座標
 		int  GetY2();					                   // 敌人右下角 y 座標
-		bool GetIs_right();
 		int GetMaxDelay();
 		void ChangeHP(int flag);
 		void SetHP(int initialHP);
@@ -31,8 +32,6 @@ namespace game_framework {
 		bool Halt();
 		void SetHalt(bool flag);
 		bool touchHero(CEraser *hero);                      //与主角的碰撞
-		//bool shotHero(CEraser *hero);                       //发射子弹射击主角
-		//void shooting();                                 //发射子弹初始化
 		virtual void LoadBitmap();						// 載入圖形
 	protected:
 		CAnimation    enemy_left;          // 敌人向左
@@ -45,10 +44,7 @@ namespace game_framework {
 		int atk;
 		bool is_Down;               
 		bool is_right;             
-		
 		bool is_halt;
-
-
 	};
 
 	class EnemyDuck :public AbstractEnemy{
@@ -64,22 +60,8 @@ namespace game_framework {
 		EnchancedEnemy();
 		~EnchancedEnemy();
 		void LoadBitmap();
-		//void ChaseHero(Map* map , CEraser* hero);
-	
 		
-
-
-
-
 	};
-
-
-
-
-
-
-
-
 
 }
 

@@ -7,11 +7,11 @@ namespace game_framework {
 	{
 	public:
 		Lava_Rock_2();
-		
+		~Lava_Rock_2();
 		void OnShow(Map* map);
 		void LoadBitmap();
 		bool IsEmpty(int x, int y);
-		void interact(Map* map, int &mapLevel, CEraser* hero, CBullet* bullet);
+		void interact(Map* map, int &mapLevel, CEraser* hero, CBullet* bullet, Boomerang* boomerangItem);
 		void dropItem(AbstractEnemy* enemy, vector<AbstractItem*> itemlist);
 		void initialize();
 		int ScreenX(int &x);
@@ -22,6 +22,7 @@ namespace game_framework {
 		void SetX1Y1ToRight(int x);
 		void GetRandomItem(AbstractItem* item);
 		bool isScrol();
+		bool GetBossAlive();
 	private:
 		const int X, Y;
 		const int MW, MH;

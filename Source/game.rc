@@ -86,6 +86,22 @@ IDB_BOSSFIRE_LEFT       BITMAP                  "G:\\OOP_Games\\GameFramework-ma
 
 IDB_BOSSFIRE_RIGHT      BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\enemymiddlefire2.bmp"
 
+IDB_BOSS_2              BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\boss2.bmp"
+
+IDB_INITIALBACKGROUND   BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\StateInit_background.bmp"
+
+IDB_INITTIPS            BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\tips.bmp"
+
+IDB_VICTORY             BITMAP                  "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\Victory.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// PNG
+//
+
+IDB_PNG1                PNG                     "G:\\OOP_Games\\GameFramework-master\\Bitmaps\\Victory.png"
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

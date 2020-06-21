@@ -79,7 +79,8 @@ void CGameStateInit::OnInit()
 	//
 	// 開始載入資料
 	//
-	logo.LoadBitmap(IDB_BACKGROUND);
+	logo.LoadBitmap(IDB_INITIALBACKGROUND);
+	tips.LoadBitmap(IDB_INITTIPS);
 	Sleep(300);				// 放慢，以便看清楚進度，實際游戲請刪除此Sleep
 	//
 	// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
@@ -110,24 +111,11 @@ void CGameStateInit::OnShow()
 	//
 	// 貼上logo
 	//
-	logo.SetTopLeft((SIZE_X - logo.Width())/2, SIZE_Y/8);
+	logo.SetTopLeft(0, 0);
 	logo.ShowBitmap();
-	//
-	// Demo螢幕字型的使用，不過開發時請盡量避免直接使用字型，改用CMovingBitmap比較好
-	//
-	CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
-	CFont f,*fp;
-	f.CreatePointFont(160,"Times New Roman");	// 產生 font f; 160表示16 point的字
-	fp=pDC->SelectObject(&f);					// 選用 font f
-	pDC->SetBkColor(RGB(0,0,0));
-	pDC->SetTextColor(RGB(255,255,0));
-	pDC->TextOut(120,220,"Please click mouse or press SPACE to begin.");
-	pDC->TextOut(5,395,"Press Ctrl-F to switch in between window mode and full screen mode.");
-	if (ENABLE_GAME_PAUSE)
-		pDC->TextOut(5,425,"Press Ctrl-Q to pause the Game.");
-	pDC->TextOut(5,455,"Press Alt-F4 or ESC to Quit.");
-	pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
-	CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
+	tips.SetTopLeft(0, 400);
+	tips.ShowBitmap();
+	
 }								
 
 /////////////////////////////////////////////////////////////////////////////
@@ -144,11 +132,12 @@ void CGameStateOver::OnMove()
 	counter--;
 	if (counter < 0)
 		GotoGameState(GAME_STATE_INIT);
+	GotoGameState(ENABLE_GAME_PAUSE);
 }
 
 void CGameStateOver::OnBeginState()
 {
-	counter = 30 * 5; // 5 seconds
+	counter = 300 * 5; // 5 seconds
 }
 
 void CGameStateOver::OnInit()
@@ -192,30 +181,22 @@ void CGameStateOver::OnShow()
 CGameStateRun::CGameStateRun(CGame *g)
 : CGameState(g), NUMBALLS(28)
 {
-	
 	maps.push_back(new Lava_Rock_1());
 	maps.push_back(new Lava_Rock_2());
 	maps.push_back(new ScrollMap());
 	bullet = new CBullet();
-	useableItems.push_back(new UseableItem());
-	//enemies.push_back(new EnemyDuck());
-	//enemies2.push_back(new EnchancedEnemy());
-	//items.push_back(new Item());
-	//items.push_back(new Potion());
-	//items.push_back(new Star());
-	//items.push_back(new AttackUp());
+	boomerangItem = new Boomerang();
+	
 }
 
 CGameStateRun::~CGameStateRun()
 {
 	
 	delete bullet;
-	/*
-	vector<AbstractItem*>::const_iterator itemiter;
-	for (itemiter = items.begin(); itemiter != items.end(); itemiter++) {
-		delete (*itemiter);
-	}*/
-	
+	delete boomerangItem;
+	for (int i = 0; i < 3; i++) {
+		maps[i]->~Map();
+	}
 }
 
 void CGameStateRun::OnBeginState()
@@ -226,19 +207,19 @@ void CGameStateRun::OnBeginState()
 	const int HITS_LEFT = 3;
 	const int HITS_LEFT_X = 590;
 	const int HITS_LEFT_Y = 0;
-	const int BACKGROUND_X = 60;
+	const int BACKGROUND_X = 0;
 	const int ANIMATION_SPEED = 15;
 	mapLevel = 0;
 	eraser.Initialize();
-	background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
-	help.SetTopLeft(0, SIZE_Y - help.Height());			// 設定說明圖的起始座標
+	background.SetTopLeft(0,0);				// 設定背景的起始座標
+	help.SetTopLeft(0, 300);			// 設定說明圖的起始座標
 	hits_left.SetInteger(HITS_LEFT);					// 指定剩下的撞擊數
 	//hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
 	points.SetInteger(point);
 	points.SetTopLeft(590,0);
-	CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
-	CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
-	CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
+	CAudio::Instance()->Play(AUDIO_GANMEBACKGROUND, true);			// 撥放 WAVE
+	//CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
+	//CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
 	vector<Map*>::iterator mapit;
 
 	
@@ -285,14 +266,20 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
 	if (!(bullet->IsAlive())) {
 		if (nChar == KEY_SPACE) {
+			CAudio::Instance()->Play(AUDIO_HEROBULLETEXPLOSION, false);
 			bullet->OnKeyDown(nChar, &eraser, map);
-			//bullet->OnMove();
-		}
-	}
-	if (!useableItems[0]->IsAlive()) {
-		if (nChar == KEY_X) {
-			useableItems[0]->OnKeyDown(nChar, &eraser, map);
+				
 			
+		}
+		
+		
+	}
+	
+	
+	if (!boomerangItem->IsAlive()&&hero->IsGetUseableItem()) {
+		if (nChar == KEY_X) {
+			CAudio::Instance()->Play(AUDIO_BOOMERANG, false);
+			boomerangItem->OnKeyDown(nChar, &eraser, map);
 		}
 	}
 	
@@ -371,41 +358,44 @@ void CGameStateRun::OnInit()  								// 游戲的初值及圖形設定
 	// 開始載入資料
 	//
 								// 載入第i個球的圖形
-	eraser.LoadBitmap();
-	background.LoadBitmap(IDB_BACKGROUND);					// 載入背景的圖形
+	
+	background.LoadBitmap(IDB_INITIALBACKGROUND);					// 載入背景的圖形
+	
 	//
 	// 完成部分Loading動作，提高進度
 	//
 	ShowInitProgress(50);
+	help.LoadBitmap(IDB_INITTIPS);
 	Sleep(300); // 放慢，以便看清楚進度，實際游戲請刪除此Sleep
-	//
-	// 繼續載入其他資料
-	//
-	help.LoadBitmap(IDB_HELP, RGB(255, 255, 255));				// 載入說明的圖形
-	corner.LoadBitmap(IDB_CORNER);							// 載入角落圖形
-	corner.ShowBitmap(background);							// 將corner貼到background
-										// 載入圖形
-	//hits_left.LoadBitmap();
+
 	points.LoadBitmap();
 	CAudio::Instance()->Load(AUDIO_DING, "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
 	CAudio::Instance()->Load(AUDIO_LAKE, "sounds\\lake.mp3");	// 載入編號1的聲音lake.mp3
 	CAudio::Instance()->Load(AUDIO_NTUT, "sounds\\ntut.mid");	// 載入編號2的聲音ntut.mid
+
+	CAudio::Instance()->Load(AUDIO_CHEERS, "sounds\\Cheers.mp3");
+	CAudio::Instance()->Load(AUDIO_GANMEBACKGROUND, "sounds\\GameBackground.mp3");
+	CAudio::Instance()->Load(AUDIO_HEROBELIGHTENED, "sounds\\Belightning.mp3");
+	CAudio::Instance()->Load(AUDIO_MONSTERDEATH, "sounds\\Death.mp3");
+	CAudio::Instance()->Load(AUDIO_MONSTERLAUGHTER, "sounds\\MonsterLaughter.mp3");
+	CAudio::Instance()->Load(AUDIO_HEROBULLETEXPLOSION, "sounds\\Herobulletexplosion.wav");
+	CAudio::Instance()->Load(AUDIO_BOSSFIRE, "sounds\\BossFire.mp3");
+	CAudio::Instance()->Load(AUDIO_ENCHANCEDENEMY, "sounds\\EnchancedEnemy.mp3");
+	CAudio::Instance()->Load(AUDIO_BOOMERANG, "sounds\\Boomerang.mp3");
+	CAudio::Instance()->Load(AUDIO_ENEMYDUCK, "sounds\\EnemyDuck.mp3");
 	//
 	// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
 	//
-
+	eraser.LoadBitmap();
+	bullet->LoadBitmap();
+	boomerangItem->LoadBitmap();
 	oneHeart.LoadBitmap(IDB_ONEHEART, RGB(255, 255, 255));
 	twoHeart.LoadBitmap(IDB_TWOHEART, RGB(255, 255, 255));
 	threeHeart.LoadBitmap(IDB_THREEHEART, RGB(255, 255, 255));
 	atk.LoadBitmap(IDB_ATK, RGB(255, 255, 255));
 	shield.LoadBitmap(IDB_SHIELD, RGB(255, 255, 255));
-	eraser.LoadBitmap();
-	bullet->LoadBitmap();
-	useableItems[0]->LoadBitmap();
 	boomerang.LoadBitmap(IDB_BOOMERANG_1,RGB(0,0,0));
-	//enemies[0]->LoadBitmap();
-	//enemies2[0]->LoadBitmap();
-	//enemies2[0]->SetXY(520, 48);
+	victory.LoadBitmap(IDB_VICTORY, RGB(255, 255, 255));
 }
 
 
@@ -431,31 +421,39 @@ void CGameStateRun::OnMove()							// 移動游戲元素
 	case 0:
 		maps[mapLevel]->OnMove();
 		if (hero->IsAlive()) {
-			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
+			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet , boomerangItem);
 		}
 		else {
 			GotoGameState(GAME_STATE_OVER);
+			CAudio::Instance()->Stop(AUDIO_GANMEBACKGROUND);
+
 		}
 		break;
 	case 1:
 		maps[mapLevel]->OnMove();
-		//eraser.OnMove(maps[mapLevel]); //hero in the second map
+		//hero in the second map
 		if (hero->IsAlive()) {
-			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
+			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet, boomerangItem);
 
 		}
 		else {
 			GotoGameState(GAME_STATE_OVER);
+			CAudio::Instance()->Stop(AUDIO_GANMEBACKGROUND);
 		}
 		break;
 	case 2:
+		//hero in  the third map
 		if (hero->IsAlive()) {
-			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet);
+			maps[mapLevel]->interact(maps[mapLevel], mapLevel, hero, bullet, boomerangItem);
 
 		}
 		else {
+			// if boss or hero died , game over
 			GotoGameState(GAME_STATE_OVER);
+			CAudio::Instance()->Stop(AUDIO_GANMEBACKGROUND);
+
 		}
+		
 		break;
 	default:
 		break;
@@ -479,36 +477,36 @@ void CGameStateRun::OnShow()
 	//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 	//
 	//background.ShowBitmap();			// 貼上背景圖
-	//help.ShowBitmap();					// 貼上說明圖
-	
-	
-	corner.SetTopLeft(0,0);
-	corner.ShowBitmap();
-	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
-	corner.ShowBitmap();
+	help.ShowBitmap();					// 貼上說明圖
 	
 	CEraser* hero = &eraser;
 	
 	switch (mapLevel) {
 	case 0 :
+		
+		//useableItems[0]->OnShow(maps[mapLevel]);
 		maps[mapLevel]->OnShow(maps[mapLevel]);
 		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
-		useableItems[0]->OnShow(maps[mapLevel]);
+		boomerangItem->OnShow(maps[mapLevel]);
 		break;
 
 
 	case 1:
+		
 		maps[mapLevel]->OnShow(maps[mapLevel]);
 		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
+		boomerangItem->OnShow(maps[mapLevel]);
 		break;
 
 
 	case 2:
+		
 		maps[mapLevel]->OnShow(maps[mapLevel]);
 		eraser.OnShow(maps[mapLevel]);
 		bullet->OnShow(maps[mapLevel]);
+		boomerangItem->OnShow(maps[mapLevel]);
 		break;
 
 	default:
@@ -537,6 +535,11 @@ void CGameStateRun::OnShow()
 	if (hero->IsGetUseableItem()) {
 		boomerang.SetTopLeft(400, 430);
 		boomerang.ShowBitmap();
+	}
+	if (!maps[2]->GetBossAlive()) {
+		victory.SetTopLeft(195,145);
+		victory.ShowBitmap();
+		//CAudio::Instance()->Play(AUDIO_CHEERS, false);
 	}
 	points.SetInteger(hero->GetPoint());
 	points.ShowBitmap();

@@ -129,6 +129,7 @@ void game_framework::AbstractEnemy::ChaseHero(Map * map, CEraser * hero)
 	}
 	
 	if (IsAlive() == true) {
+		
 		//enemy goes left
 		if (hero->GetX1() < x) {
 			if (map->IsEmpty((x - 1), y) == true) {
@@ -170,6 +171,7 @@ void game_framework::AbstractEnemy::OnShow(Map * m)
 	if (IsAlive()) {
 		enemy_left.SetTopLeft(m->ScreenX(x),m->ScreenY(y));
 		enemy_left.OnShow();
+		
 	}
 }
 
@@ -194,9 +196,30 @@ bool game_framework::AbstractEnemy::beShot(CBullet * bullet)
 	}
 }
 
+bool game_framework::AbstractEnemy::beShotByItem(Boomerang* boomerang)
+{
+	if (!IsAlive())//如果怪物死了就不执行碰撞
+	{
+		return false;
+	}
+	else    //怪物活着，子弹活着
+	{
+		if (!(boomerang->IsAlive()))//怪物活着，子弹活着
+		{
+			return false;
+		}
+		else                     //怪物活着，子弹活着
+		{
+
+			return HitRectangle(boomerang->GetX1(), boomerang->GetY1(), boomerang->GetX2(), boomerang->GetY2());
+		}
+
+	}
+}
+
 void game_framework::AbstractEnemy::LoadBitmap()
 {
-	enemy_left.AddBitmap(IDB_Duck, RGB(0, 0, 0));
+	enemy_left.AddBitmap(IDB_Duck, RGB(0,0,0));
 }
 
 bool game_framework::AbstractEnemy::HitRectangle(int tx1, int ty1, int tx2, int ty2)
